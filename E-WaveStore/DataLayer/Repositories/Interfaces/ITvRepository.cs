@@ -8,7 +8,6 @@ namespace E_WaveStore.DataLayer.Repositories.Interfaces
 {
     public interface ITvRepository : IBaseRepository<Tv>
     {
-        Tv GetTvByModelName(string modelName);
-        List<Tv> GettvByBrandName(string brandName);
+
     }
 }

@@ -11,14 +11,5 @@ namespace E_WaveStore.DataLayer.Repositories.Implementations
     {
         public MonoblockRepository(StoreDbContext storeDbContext) : base(storeDbContext) { }
 
-        public MonoBlock GetPhoneByModelName(string modelName)
-        {
-            return _storeDbContext.MonoBlocks.SingleOrDefault(x => x.ModelName == modelName);
-        }
-
-        public List<MonoBlock> GetPhoneByBrandName(string brandName)
-        {
-            return _storeDbContext.MonoBlocks.Where(x => x.BrandName == brandName).ToList();
-        }
     }
 }

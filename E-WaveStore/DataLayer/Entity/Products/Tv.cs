@@ -1,6 +1,7 @@
 ﻿using E_WaveStore.Entity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,6 +17,7 @@ namespace E_WaveStore.DataLayer.Entity
         public bool Wifi { get; set; }
 
         public int Frequency { get; set; } // 100 Гц
+        [MaxLength(50)]
         public string Platform { get; set; } // Android
         /* public string Color { get; set; }
          public int Weight { get; set; }*/

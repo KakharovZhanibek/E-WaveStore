@@ -19,7 +19,7 @@ namespace E_WaveStore
 {
     public class Startup
     {
-        public const string AuthMethod = "Smile";
+        public const string AuthMethod = "TestCookie";
         public Startup(Microsoft.Extensions.Configuration.IConfiguration configuration)
         {
             Configuration = configuration;
@@ -31,14 +31,14 @@ namespace E_WaveStore
         {
             services.AddControllersWithViews();
 
-           //services.AddOpenApiDocument();
+           // services.AddOpenApiDocument();
             services.AddRazorPages()
                  .AddRazorRuntimeCompilation();
 
             var connectionString = Configuration.GetValue<string>("SpecialConnectionStrings");
             services.AddDbContext<StoreDbContext>(option => option.UseSqlServer(connectionString));
 
-            //RegisterRepositories(services);
+            RegisterRepositories(services);
            // services.AddScoped<IUserService, UserService>();
             //services.AddScoped<IPhonePresentation, PhonePresentation>();
 
@@ -47,7 +47,7 @@ namespace E_WaveStore
             services.AddAuthentication(AuthMethod)
                 .AddCookie(AuthMethod, config =>
                 {
-                    config.Cookie.Name = "Smile";
+                    config.Cookie.Name = "TestCookie";
                     config.LoginPath = "/User/Login";
                     config.AccessDeniedPath = "/User/Login";
                 });
@@ -110,7 +110,7 @@ namespace E_WaveStore
 
             app.UseRouting();
 
-            //app.UseAuthentication();
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

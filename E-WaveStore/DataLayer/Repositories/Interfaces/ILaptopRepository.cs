@@ -8,7 +8,6 @@ namespace E_WaveStore.DataLayer.Repositories.Interfaces
 {
     public interface ILaptopRepository : IBaseRepository<Laptop>
     {
-        Laptop GetLaptopByModelName(string modelName);
-        List<Laptop> GetLaptopByBrandName(string brandName);
+
     }
 }

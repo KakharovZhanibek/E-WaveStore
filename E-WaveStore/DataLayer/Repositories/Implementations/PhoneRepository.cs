@@ -11,14 +11,5 @@ namespace E_WaveStore.DataLayer.Repositories.Implementations
     {
         public PhoneRepository(StoreDbContext storeDbContext) : base(storeDbContext) { }
 
-        public Phone GetPhoneByModelName(string modelName)
-        {
-            return _storeDbContext.Phones.SingleOrDefault(x => x.ModelName == modelName);
-        }
-
-        public List<Phone> GetPhoneByBrandName(string brandName)
-        {
-           return _storeDbContext.Phones.Where(x => x.BrandName == brandName).ToList();
-        }
     }
 }

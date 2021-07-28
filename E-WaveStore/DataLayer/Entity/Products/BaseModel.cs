@@ -10,7 +10,9 @@ namespace E_WaveStore.Entity
     {
         [Key]
         public long Id { get; set; }
+        [MaxLength(100)]
         public string BrandName { get; set; }
+        [MaxLength(100)]
         public string ModelName { get; set; }
         public double Price { get; set; }
         public int Amount { get; set; }

@@ -8,7 +8,6 @@ namespace E_WaveStore.DataLayer.Repositories.Interfaces
 {
     public interface ISmartWatchRepository : IBaseRepository<SmartWatch>
     {
-        SmartWatch GetSmartWatchByModelName(string modelName);
-        List<SmartWatch> GetSmartWatchByBrandName(string brandName);
+      
     }
 }

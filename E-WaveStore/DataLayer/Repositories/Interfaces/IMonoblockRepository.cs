@@ -8,7 +8,6 @@ namespace E_WaveStore.DataLayer.Repositories.Interfaces
 {
     public interface IMonoblockRepository : IBaseRepository<MonoBlock>
     {
-        MonoBlock GetPhoneByModelName(string modelName);
-        List<MonoBlock> GetPhoneByBrandName(string brandName);
+
     }
 }

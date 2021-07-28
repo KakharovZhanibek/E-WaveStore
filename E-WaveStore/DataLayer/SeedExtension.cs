@@ -760,9 +760,7 @@ namespace E_WaveStore.DataLayer
                     BodyMaterial = "aluminum",
                     Wifi = true,
                     Bluetooth = true,
-                    Diagonal = 0,
                     Sensor = "accelerometer",
-                    Dimension = "3.4x4x1",
                     Weight = 0,
                     Color = "white",
                 };
@@ -779,9 +777,7 @@ namespace E_WaveStore.DataLayer
                     BodyMaterial = "steel, policarbonium",
                     Wifi = false,
                     Bluetooth = true,
-                    Diagonal = 0,
                     Sensor = "accelerometer",
-                    Dimension = "3.4x4x1",
                     Weight = 0,
                     Color = "Black",
                 };

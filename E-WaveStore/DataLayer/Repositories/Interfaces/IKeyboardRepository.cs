@@ -8,7 +8,6 @@ namespace E_WaveStore.DataLayer.Repositories.Interfaces
 {
     public interface IKeyboardRepository : IBaseRepository<Keyboard>
     {
-        Keyboard GetKeyboardByModelName(string modelName);
-        List<Keyboard> GetKeyboardByBrandName(string brandName);
+
     }
 }

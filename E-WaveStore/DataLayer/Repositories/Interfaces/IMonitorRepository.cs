@@ -8,7 +8,6 @@ namespace E_WaveStore.DataLayer.Repositories.Interfaces
 {
     public interface IMonitorRepository : IBaseRepository<Monitor>
     {
-        Monitor GetMonitorByModelName(string modelName);
-        List<Monitor> GetMonitorByBrandName(string brandName);
+
     }
 }

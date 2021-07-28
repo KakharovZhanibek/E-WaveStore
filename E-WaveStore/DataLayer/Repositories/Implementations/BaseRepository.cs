@@ -24,6 +24,15 @@ namespace E_WaveStore.DataLayer.Repositories.Implementations
             return _dbSet.SingleOrDefault(x => x.Id == id);
         }
 
+        public DbModel GetByModelName(string modelName)
+        {
+            return _dbSet.SingleOrDefault(x => x.ModelName == modelName);
+        }
+        public List<DbModel> GetAllByBrandName(string brandName)
+        {
+            return _dbSet.Where(x=>x.BrandName == brandName).ToList();
+        }
+
         public List<DbModel> GetAll()
         {
             return _dbSet.ToList();

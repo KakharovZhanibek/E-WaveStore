@@ -8,7 +8,6 @@ namespace E_WaveStore.DataLayer.Repositories.Interfaces
 {
     public interface IMouseRepository : IBaseRepository<Mouse>
     {
-        Mouse GetMouseByModelName(string modelName);
-        List<Mouse> GetMouseByBrandName(string brandName);
+     
     }
 }

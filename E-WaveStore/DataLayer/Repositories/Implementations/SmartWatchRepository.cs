@@ -11,14 +11,5 @@ namespace E_WaveStore.DataLayer.Repositories.Implementations
     {
         public SmartWatchRepository(StoreDbContext storeDbContext) : base(storeDbContext) { }
 
-        public SmartWatch GetSmartWatchByModelName(string modelName)
-        {
-            return _storeDbContext.SmartWatches.SingleOrDefault(x => x.ModelName == modelName);
-        }
-
-        public List<SmartWatch> GetSmartWatchByBrandName(string brandName)
-        {
-            return _storeDbContext.SmartWatches.Where(x => x.BrandName == brandName).ToList();
-        }
     }
 }

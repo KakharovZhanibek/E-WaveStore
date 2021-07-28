@@ -8,7 +8,6 @@ namespace E_WaveStore.DataLayer.Repositories.Interfaces
 {
     public interface IPhoneRepository : IBaseRepository<Phone>
     {
-        Phone GetPhoneByModelName(string modelName);
-        List<Phone> GetPhoneByBrandName(string brandName);
+       
     }
 }
