@@ -20,6 +20,11 @@ namespace E_WaveStore.DataLayer
         public DbSet<SmartWatch> SmartWatches{ get; set; }
         public DbSet<Tv> Tvs{ get; set; }
 
+        public DbSet<UserDb> UserDbs{ get; set; }
+
+
+
+
 
 
         public StoreDbContext(DbContextOptions options) : base(options) { }

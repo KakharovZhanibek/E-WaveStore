@@ -15,7 +15,7 @@ namespace E_WaveStore.Entity
         [MaxLength(100)]
         public string ModelName { get; set; }
         public double Price { get; set; }
-        public int Amount { get; set; }
+        public int AvailableQuantity { get; set; }
         public string ImgUrl { get; set; }
         public Category Category { get; set; }
     }

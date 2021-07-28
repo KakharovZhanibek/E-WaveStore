@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.Configuration;
 using E_WaveStore.DataLayer;
+using E_WaveStore.DataLayer.Repositories;
 using E_WaveStore.DataLayer.Repositories.Interfaces;
+using E_WaveStore.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -39,7 +41,8 @@ namespace E_WaveStore
             services.AddDbContext<StoreDbContext>(option => option.UseSqlServer(connectionString));
 
             RegisterRepositories(services);
-           // services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserRepository, UserRepository>();
             //services.AddScoped<IPhonePresentation, PhonePresentation>();
 
             RegisterAutoMapper(services);
@@ -48,8 +51,8 @@ namespace E_WaveStore
                 .AddCookie(AuthMethod, config =>
                 {
                     config.Cookie.Name = "TestCookie";
-                    config.LoginPath = "/User/Login";
-                    config.AccessDeniedPath = "/User/Login";
+                    config.LoginPath = "/Home/Login";
+                    config.AccessDeniedPath = "/Home/Login";
                 });
 
             services.AddHttpContextAccessor();
