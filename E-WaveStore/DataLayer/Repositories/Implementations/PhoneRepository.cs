@@ -9,7 +9,7 @@ namespace E_WaveStore.DataLayer.Repositories.Implementations
 {
     public class PhoneRepository : BaseRepository<Phone>, IPhoneRepository
     {
-        public PhoneRepository(StoreDbContext storeDbContext) : base(storeDbContext) { }
+        public PhoneRepository(ApplicationContext storeDbContext) : base(storeDbContext) { }
 
     }
 }

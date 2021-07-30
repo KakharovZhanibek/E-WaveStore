@@ -10,10 +10,10 @@ namespace E_WaveStore.DataLayer.Repositories.Implementations
 {
     public abstract class BaseRepository<DbModel> : IBaseRepository<DbModel> where DbModel : BaseModel
     {
-        protected StoreDbContext _storeDbContext;
+        protected ApplicationContext _storeDbContext;
         protected DbSet<DbModel> _dbSet;
 
-        public BaseRepository(StoreDbContext storeDbContext)
+        public BaseRepository(ApplicationContext storeDbContext)
         {
             _storeDbContext = storeDbContext;
             _dbSet = _storeDbContext.Set<DbModel>();

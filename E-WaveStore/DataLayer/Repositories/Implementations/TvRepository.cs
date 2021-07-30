@@ -9,7 +9,7 @@ namespace E_WaveStore.DataLayer.Repositories.Implementations
 {
     public class TvRepository : BaseRepository<Tv>, ITvRepository
     {
-        public TvRepository(StoreDbContext storeDbContext) : base(storeDbContext) { }
+        public TvRepository(ApplicationContext storeDbContext) : base(storeDbContext) { }
               
     }
 }

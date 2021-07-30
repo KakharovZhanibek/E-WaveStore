@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.Configuration;
 using E_WaveStore.DataLayer;
+using E_WaveStore.DataLayer.Models;
 using E_WaveStore.DataLayer.Repositories.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,14 +21,14 @@ namespace E_WaveStore
 {
     public class Startup
     {
-        public const string AuthMethod = "TestCookie";
+       // public const string AuthMethod = "TestCookie";
         public Startup(Microsoft.Extensions.Configuration.IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
         public Microsoft.Extensions.Configuration.IConfiguration Configuration { get; }
-                
+       
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
@@ -35,8 +37,13 @@ namespace E_WaveStore
             services.AddRazorPages()
                  .AddRazorRuntimeCompilation();
 
-            var connectionString = Configuration.GetValue<string>("SpecialConnectionStrings");
-            services.AddDbContext<StoreDbContext>(option => option.UseSqlServer(connectionString));
+           // var connectionString = Configuration.GetValue<string>("SpecialConnectionStrings");
+            //services.AddDbContext<StoreDbContext>(option => option.UseSqlServer(connectionString));
+            services.AddDbContext<ApplicationContext>(options =>
+               options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddIdentity<User, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationContext>();
 
             RegisterRepositories(services);
            // services.AddScoped<IUserService, UserService>();
@@ -44,13 +51,13 @@ namespace E_WaveStore
 
             RegisterAutoMapper(services);
 
-            services.AddAuthentication(AuthMethod)
+           /* services.AddAuthentication(AuthMethod)
                 .AddCookie(AuthMethod, config =>
                 {
                     config.Cookie.Name = "TestCookie";
                     config.LoginPath = "/User/Login";
                     config.AccessDeniedPath = "/User/Login";
-                });
+                });*/
 
             services.AddHttpContextAccessor();
         }
@@ -105,6 +112,7 @@ namespace E_WaveStore
                 
                 app.UseHsts();
             }
+          
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

@@ -9,7 +9,7 @@ namespace E_WaveStore.DataLayer.Repositories.Implementations
 {
     public class MouseRepository : BaseRepository<Mouse>, IMouseRepository
     {
-        public MouseRepository(StoreDbContext storeDbContext) : base(storeDbContext) { }
+        public MouseRepository(ApplicationContext storeDbContext) : base(storeDbContext) { }
 
     }
 }

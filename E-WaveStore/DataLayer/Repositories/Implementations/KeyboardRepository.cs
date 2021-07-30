@@ -9,6 +9,6 @@ namespace E_WaveStore.DataLayer.Repositories.Implementations
 {
     public class KeyboardRepository : BaseRepository<Keyboard>, IKeyboardRepository
     {
-        public KeyboardRepository(StoreDbContext storeDbContext) : base(storeDbContext) { }
+        public KeyboardRepository(ApplicationContext storeDbContext) : base(storeDbContext) { }
     }
 }

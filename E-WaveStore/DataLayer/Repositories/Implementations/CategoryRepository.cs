@@ -10,9 +10,9 @@ namespace E_WaveStore.DataLayer.Repositories.Implementations
 {
     public class CategoryRepository : ICategoryRepository
     {
-        protected StoreDbContext _storeDbContext;
+        protected ApplicationContext _storeDbContext;
 
-        public CategoryRepository(StoreDbContext storeDbContext)
+        public CategoryRepository(ApplicationContext storeDbContext)
         {
             _storeDbContext = storeDbContext;
         }

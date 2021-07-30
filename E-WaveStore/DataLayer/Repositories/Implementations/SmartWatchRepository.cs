@@ -9,7 +9,7 @@ namespace E_WaveStore.DataLayer.Repositories.Implementations
 {
     public class SmartWatchRepository : BaseRepository<SmartWatch>, ISmartWatchRepository 
     {
-        public SmartWatchRepository(StoreDbContext storeDbContext) : base(storeDbContext) { }
+        public SmartWatchRepository(ApplicationContext storeDbContext) : base(storeDbContext) { }
 
     }
 }

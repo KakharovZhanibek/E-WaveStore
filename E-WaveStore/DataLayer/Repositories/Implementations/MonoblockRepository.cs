@@ -9,7 +9,7 @@ namespace E_WaveStore.DataLayer.Repositories.Implementations
 {
     public class MonoblockRepository : BaseRepository<MonoBlock>, IMonoblockRepository
     {
-        public MonoblockRepository(StoreDbContext storeDbContext) : base(storeDbContext) { }
+        public MonoblockRepository(ApplicationContext storeDbContext) : base(storeDbContext) { }
 
     }
 }

@@ -8,7 +8,7 @@ namespace E_WaveStore.DataLayer.Repositories.Implementations
 {
     public class MonitorRepository : BaseRepository<Monitor>, IMonitorRepository
     {
-        public MonitorRepository(StoreDbContext storeDbContext) : base(storeDbContext) { }
+        public MonitorRepository(ApplicationContext storeDbContext) : base(storeDbContext) { }
 
     }
 }
