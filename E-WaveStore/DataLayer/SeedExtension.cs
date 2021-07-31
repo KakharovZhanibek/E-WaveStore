@@ -778,7 +778,6 @@ namespace E_WaveStore.DataLayer
             }
         }
 
-
         private static void CreateDefaultTv(IServiceProvider serviceProvider)
         {
             var tvRepository = serviceProvider.GetService<ITvRepository>();
@@ -831,23 +830,6 @@ namespace E_WaveStore.DataLayer
 
             }
         }
-
-        /*private static void CreateDefaultCitizen(IServiceProvider serviceProvider)
-        {
-            var citizenRepository = serviceProvider.GetService<ICitizenRepository>();
-
-            var admin = citizenRepository.GetByName(AdminName);
-            if (admin == null)
-            {
-                admin = new Citizen()
-                {
-                    Name = AdminName,
-                    Password = "admin",
-                    Age = 30
-                };
-                citizenRepository.Save(admin);
-            }
-        }*/
 
     }
 }

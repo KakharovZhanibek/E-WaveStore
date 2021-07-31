@@ -6,8 +6,13 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.Configuration;
 using E_WaveStore.DataLayer;
+using E_WaveStore.DataLayer.Entity;
 using E_WaveStore.DataLayer.Models;
+using E_WaveStore.DataLayer.Repositories.Implementations;
 using E_WaveStore.DataLayer.Repositories.Interfaces;
+using E_WaveStore.Models;
+using E_WaveStore.PresentationLayer.Implementations;
+using E_WaveStore.PresentationLayer.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -33,7 +38,7 @@ namespace E_WaveStore
         {
             services.AddControllersWithViews();
 
-            // services.AddOpenApiDocument();
+            //services.AddOpenApiDocument();
             services.AddRazorPages()
                  .AddRazorRuntimeCompilation();
 
@@ -41,9 +46,6 @@ namespace E_WaveStore
             //services.AddDbContext<StoreDbContext>(option => option.UseSqlServer(connectionString));
             services.AddDbContext<ApplicationContext>(options =>
                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
-            /*services.AddIdentity<User, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationContext>();*/
 
             services.AddIdentity<User, IdentityRole>(opts =>
             {
@@ -58,8 +60,11 @@ namespace E_WaveStore
 
 
             RegisterRepositories(services);
-            // services.AddScoped<IUserService, UserService>();
-            //services.AddScoped<IPhonePresentation, PhonePresentation>();
+
+            /* services.AddScoped<ICategoryRepository, CategoryRepository>();
+             services.AddScoped<IPhoneRepository, PhoneRepository>();*/
+
+            services.AddScoped<IKeyboardPresentation, KeyboardPresentation>();
 
             RegisterAutoMapper(services);
 
@@ -73,7 +78,6 @@ namespace E_WaveStore
 
             services.AddHttpContextAccessor();
         }
-
         private void RegisterRepositories(IServiceCollection services)
         {
             IEnumerable<Type> implementationsType = Assembly
@@ -99,7 +103,7 @@ namespace E_WaveStore
         {
             var configurationExp = new MapperConfigurationExpression();
 
-            // MapBothSide<Phone, PhoneViewModel>(configurationExp);
+            MapBothSide<Keyboard, KeyboardVM>(configurationExp);
 
             var config = new MapperConfiguration(configurationExp);
             var mapper = new Mapper(config);

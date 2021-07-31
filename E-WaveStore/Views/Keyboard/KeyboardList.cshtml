@@ -1,0 +1,31 @@
+﻿@model ReflectionIT.Mvc.Paging.PagingList<KeyboardVM>
+@using ReflectionIT.Mvc.Paging
+@addTagHelper *,ReflectionIT.Mvc.Paging
+
+@{
+    ViewData["Title"] = "KeyboardList";
+}
+
+@if (Model != null)
+{
+    @foreach (var item in Model)
+    {
+
+        <div class="container forFlexDisplay">
+            <div class="padding50">
+
+                <img src=@(item.ImgUrl == null ? "" : $"{item.ImgUrl}") class="card-img-top">
+            </div>
+
+
+            <div class="padding50">
+                <h5 class="forFlexDisplay">Full Info</h5>
+                <p>BrandName: <b>@item.BrandName</b></p>
+                <p>ModelName: <b>@item.ModelName</b></p>
+                <p>Price: <b>@item.Price</b></p>
+              
+            </div>
+
+        </div>
+    }
+}
