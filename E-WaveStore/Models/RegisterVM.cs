@@ -17,6 +17,7 @@ namespace E_WaveStore.Models
 
         [Required]
         [DataType(DataType.Password)]
+        [StringLength(100, ErrorMessage = "Поле {0} должно иметь минимум {2} и максимум {1} символов.", MinimumLength = 5)]
         [Display(Name = "Password")]
         public string Password { get; set; }        
 

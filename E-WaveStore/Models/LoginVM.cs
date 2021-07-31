@@ -12,9 +12,9 @@ namespace E_WaveStore.Models
         [Display(Name = "User Name")]
         public string UserName { get; set; }
 
-       /* [Required]
-        [Display(Name = "Email")]
-        public string Email { get; set; }*/
+        /*  [Required]
+          [Display(Name = "Email")]
+          public string Email { get; set; }*/
 
         [Required]
         [DataType(DataType.Password)]

@@ -1,0 +1,16 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model E_WaveStore.DataLayer.Models.User
+
+<h2>Изменение ролей для пользователя @Model.UserName</h2>
+
+<form asp-action="EditRole" method="post">
+    <input type="hidden" name="userId" value="@Model.Id" />
+    <div class="form-group">
+        @foreach (IdentityRole role in ViewBag.allRoles as ICollection<IdentityRole>)
+        {
+            <input type="checkbox" name="roles" value="@role.Name"
+                   @(ViewBag.userRoles.Contains(role.Name) ? "checked=\"checked\"" : "") />@role.Name <br />
+            }
+    </div>
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+</form>

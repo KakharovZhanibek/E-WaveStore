@@ -12,8 +12,6 @@ namespace E_WaveStore.DataLayer
 {
     public static class SeedExtention
     {
-        //public const string AdminName = "admin";
-
         public static IHost Seed(this IHost host)
         {
             using (var scope = host.Services.CreateScope())
@@ -43,12 +41,6 @@ namespace E_WaveStore.DataLayer
 
             if (!categories)
             {
-                Category category_1 = new Category()
-                {
-                    Id = 1L,
-                    CategoryName = "Keyboards"
-                };
-
                 List<long> categoryIds = new List<long>() { 1, 2, 3, 4, 5, 6, 7, 8 };
                 List<string> categoryNames = new List<string>() { "Keyboards", "Laptops", "Monitors", "Monoblocks", "Mice", "Phones", "Smart Watches", "Tv" };
 
@@ -57,8 +49,7 @@ namespace E_WaveStore.DataLayer
                     Category category = new Category()
                     {
                         Id = categoryIds[i],
-                        CategoryName = categoryNames[i],
-
+                        CategoryName = categoryNames[i]
                     };
 
                     categoryRepository.Save(category);

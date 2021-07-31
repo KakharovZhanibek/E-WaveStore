@@ -21,43 +21,55 @@ namespace E_WaveStore
 {
     public class Startup
     {
-       // public const string AuthMethod = "TestCookie";
+        // public const string AuthMethod = "TestCookie";
         public Startup(Microsoft.Extensions.Configuration.IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
         public Microsoft.Extensions.Configuration.IConfiguration Configuration { get; }
-       
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
 
-           // services.AddOpenApiDocument();
+            // services.AddOpenApiDocument();
             services.AddRazorPages()
                  .AddRazorRuntimeCompilation();
 
-           // var connectionString = Configuration.GetValue<string>("SpecialConnectionStrings");
+            // var connectionString = Configuration.GetValue<string>("SpecialConnectionStrings");
             //services.AddDbContext<StoreDbContext>(option => option.UseSqlServer(connectionString));
             services.AddDbContext<ApplicationContext>(options =>
                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<User, IdentityRole>()
+            /*services.AddIdentity<User, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationContext>();*/
+
+            services.AddIdentity<User, IdentityRole>(opts =>
+            {
+                opts.Password.RequiredLength = 5;   // минимальная длина
+                opts.Password.RequireNonAlphanumeric = false;   // требуются ли не алфавитно-цифровые символы
+                opts.Password.RequireLowercase = false; // требуются ли символы в нижнем регистре
+                opts.Password.RequireUppercase = false; // требуются ли символы в верхнем регистре
+                opts.Password.RequireDigit = false; // требуются ли цифры
+                opts.User.RequireUniqueEmail = true;
+            })
                 .AddEntityFrameworkStores<ApplicationContext>();
 
+
             RegisterRepositories(services);
-           // services.AddScoped<IUserService, UserService>();
+            // services.AddScoped<IUserService, UserService>();
             //services.AddScoped<IPhonePresentation, PhonePresentation>();
 
             RegisterAutoMapper(services);
 
-           /* services.AddAuthentication(AuthMethod)
-                .AddCookie(AuthMethod, config =>
-                {
-                    config.Cookie.Name = "TestCookie";
-                    config.LoginPath = "/User/Login";
-                    config.AccessDeniedPath = "/User/Login";
-                });*/
+            /* services.AddAuthentication(AuthMethod)
+                 .AddCookie(AuthMethod, config =>
+                 {
+                     config.Cookie.Name = "TestCookie";
+                     config.LoginPath = "/User/Login";
+                     config.AccessDeniedPath = "/User/Login";
+                 });*/
 
             services.AddHttpContextAccessor();
         }
@@ -87,7 +99,7 @@ namespace E_WaveStore
         {
             var configurationExp = new MapperConfigurationExpression();
 
-           // MapBothSide<Phone, PhoneViewModel>(configurationExp);
+            // MapBothSide<Phone, PhoneViewModel>(configurationExp);
 
             var config = new MapperConfiguration(configurationExp);
             var mapper = new Mapper(config);
@@ -99,7 +111,7 @@ namespace E_WaveStore
             configurationExp.CreateMap<Type1, Type2>();
             configurationExp.CreateMap<Type2, Type1>();
         }
-                
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -109,10 +121,10 @@ namespace E_WaveStore
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                
+
                 app.UseHsts();
             }
-          
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
