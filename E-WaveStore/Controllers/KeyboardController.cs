@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using E_WaveStore.DataLayer;
 using E_WaveStore.PresentationLayer.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 
 namespace E_WaveStore.Controllers
 {
+    /*[Route("api/[controller]")]
+    [ApiController]*/
     public class KeyboardController : Controller
     {
         public IActionResult Index()
@@ -23,11 +27,12 @@ namespace E_WaveStore.Controllers
             // _webHostEnvironment = webHostEnvironment;
         }
 
+       /* [HttpGet]
         public IActionResult KeyboardList(int page = 1)
         {
             var viewModels = _keyboardPersentation.GetKeyboardList(page);
 
             return View("KeyboardList", viewModels);
-        }
+        }*/
     }
 }

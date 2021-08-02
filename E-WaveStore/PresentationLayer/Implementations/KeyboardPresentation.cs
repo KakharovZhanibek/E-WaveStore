@@ -16,7 +16,7 @@ namespace E_WaveStore.PresentationLayer.Implementations
    
         private IMapper _mapper;
 
-        public const int PageSize = 3;
+        public const int PageSize = 5;
 
         public KeyboardPresentation(IKeyboardRepository keyboardRepository, IMapper mapper)
         {
@@ -24,7 +24,7 @@ namespace E_WaveStore.PresentationLayer.Implementations
             _mapper = mapper;            
         }
 
-        public PagingList<KeyboardVM> GetKeyboardList(int page)
+       /* public PagingList<KeyboardVM> GetKeyboardList(int page)
         {
             var keyboards = _keyboardRepository
                .GetAll()
@@ -35,6 +35,6 @@ namespace E_WaveStore.PresentationLayer.Implementations
 
             model.Action = "KeyboardList";
             return model;
-        }
+        }*/
     }
 }

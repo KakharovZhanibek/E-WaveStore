@@ -21,6 +21,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 
 namespace E_WaveStore
 {
@@ -35,25 +36,22 @@ namespace E_WaveStore
         public Microsoft.Extensions.Configuration.IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddControllersWithViews();
+        {            
+            services.AddControllersWithViews().AddNewtonsoftJson();
 
-            //services.AddOpenApiDocument();
             services.AddRazorPages()
                  .AddRazorRuntimeCompilation();
 
-            // var connectionString = Configuration.GetValue<string>("SpecialConnectionStrings");
-            //services.AddDbContext<StoreDbContext>(option => option.UseSqlServer(connectionString));
             services.AddDbContext<ApplicationContext>(options =>
                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<User, IdentityRole>(opts =>
             {
-                opts.Password.RequiredLength = 5;   // минимальная длина
-                opts.Password.RequireNonAlphanumeric = false;   // требуются ли не алфавитно-цифровые символы
-                opts.Password.RequireLowercase = false; // требуются ли символы в нижнем регистре
-                opts.Password.RequireUppercase = false; // требуются ли символы в верхнем регистре
-                opts.Password.RequireDigit = false; // требуются ли цифры
+                opts.Password.RequiredLength = 5;
+                opts.Password.RequireNonAlphanumeric = false;
+                opts.Password.RequireLowercase = false;
+                opts.Password.RequireUppercase = false;
+                opts.Password.RequireDigit = false;
                 opts.User.RequireUniqueEmail = true;
             })
                 .AddEntityFrameworkStores<ApplicationContext>();
@@ -61,20 +59,19 @@ namespace E_WaveStore
 
             RegisterRepositories(services);
 
-            /* services.AddScoped<ICategoryRepository, CategoryRepository>();
-             services.AddScoped<IPhoneRepository, PhoneRepository>();*/
-
-            services.AddScoped<IKeyboardPresentation, KeyboardPresentation>();
-
+            //services.AddScoped<IKeyboardPresentation, KeyboardPresentation>();
+  
             RegisterAutoMapper(services);
 
-            /* services.AddAuthentication(AuthMethod)
-                 .AddCookie(AuthMethod, config =>
-                 {
-                     config.Cookie.Name = "TestCookie";
-                     config.LoginPath = "/User/Login";
-                     config.AccessDeniedPath = "/User/Login";
-                 });*/
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "E-WaveStore",
+                    Description = "A simple example ASP.NET Core Web API",                   
+                });
+            });
 
             services.AddHttpContextAccessor();
         }
@@ -103,7 +100,15 @@ namespace E_WaveStore
         {
             var configurationExp = new MapperConfigurationExpression();
 
+            //MapBothSide<Category, CategoryVM>(configurationExp);
             MapBothSide<Keyboard, KeyboardVM>(configurationExp);
+            /*MapBothSide<Laptop, LaptopVM>(configurationExp);
+            MapBothSide<Monitor, MonitorVM>(configurationExp);
+            MapBothSide<MonoBlock, MonoBlockVM>(configurationExp);
+            MapBothSide<Mouse, MouseVM>(configurationExp);
+            MapBothSide<Phone, PhoneVm>(configurationExp);
+            MapBothSide<SmartWatch, SmartWatchVM>(configurationExp);
+            MapBothSide<Tv, TvVM>(configurationExp);*/
 
             var config = new MapperConfiguration(configurationExp);
             var mapper = new Mapper(config);
@@ -121,6 +126,13 @@ namespace E_WaveStore
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+               
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "E-WaveStore");
+                    //c.RoutePrefix = string.Empty;
+                });
             }
             else
             {

@@ -9,6 +9,6 @@ namespace E_WaveStore.PresentationLayer.Interfaces
 {
     public interface IKeyboardPresentation
     {
-        PagingList<KeyboardVM> GetKeyboardList(int page);
+        //PagingList<KeyboardVM> GetKeyboardList(int page);
     }
 }

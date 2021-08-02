@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using E_WaveStore.Services;
 using Microsoft.AspNetCore.Identity;
 using E_WaveStore.DataLayer.Models;
+using E_WaveStore.DataLayer.Repositories.Interfaces;
 
 namespace E_WaveStore.Controllers
 {
@@ -18,19 +19,23 @@ namespace E_WaveStore.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<User> _userManager;
+        private readonly ISpecificationRepository _specificationRepository;
 
-        public HomeController(ILogger<HomeController> logger, RoleManager<IdentityRole> roleManager = null, UserManager<User> userManager = null)
+        public HomeController(ILogger<HomeController> logger, RoleManager<IdentityRole> roleManager, 
+                             UserManager<User> userManager, ISpecificationRepository specificationRepository)
         {
             _logger = logger;
             _roleManager = roleManager;
             _userManager = userManager;
+            _specificationRepository = specificationRepository;
         }
 
         public async Task<IActionResult> IndexAsync()
         {
-            AddDefaultRolesAndAdmin defaultRoles = new AddDefaultRolesAndAdmin(_roleManager, _userManager);
+            AddDefaultData defaultRoles = new AddDefaultData(_roleManager, _userManager, _specificationRepository);
             await defaultRoles.CreateRoles();
             await defaultRoles.AddAdmin();
+            defaultRoles.CreateDefaultSpecification();
             return View();
         }
 

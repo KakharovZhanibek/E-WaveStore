@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace E_WaveStore.Models
 {
-    public class CommonPropertyVM : BaseVM
+    public abstract class CommonPropertyVM : BaseVM
     {
         public float DisplayDiagonal { get; set; }
         public string DisplayResolution { get; set; } // 2400*1800

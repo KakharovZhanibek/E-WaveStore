@@ -10,6 +10,5 @@ namespace E_WaveStore.DataLayer.Repositories.Implementations
     public class LaptopRepository : BaseRepository<Laptop>, ILaptopRepository
     {
         public LaptopRepository(ApplicationContext storeDbContext) : base(storeDbContext) { }
-
     }
 }

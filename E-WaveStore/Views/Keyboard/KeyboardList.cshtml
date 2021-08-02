@@ -6,26 +6,40 @@
     ViewData["Title"] = "KeyboardList";
 }
 
-@if (Model != null)
-{
-    @foreach (var item in Model)
+@*<div class="container" style="display:flex;">
+
+    @if (Model != null)
     {
+        @foreach (var item in Model)
+        {
 
-        <div class="container forFlexDisplay">
-            <div class="padding50">
+            <div style="margin:10px">
+                <div class="padding50">
 
-                <img src=@(item.ImgUrl == null ? "" : $"{item.ImgUrl}") class="card-img-top">
+                    <img src=@(item.ImgUrl == null ? "" : $"{item.ImgUrl}") class="card-img-top" style="width:100px;">
+                </div>
+
+
+                <div class="padding50">
+                    <h5 class="forFlexDisplay">Full Info</h5>
+                    <p>BrandName: <b>@item.BrandName</b></p>
+                    <p>ModelName: <b>@item.ModelName</b></p>
+                    <p>Price: <b>@item.Price</b></p>
+
+                </div>
+
             </div>
-
-
-            <div class="padding50">
-                <h5 class="forFlexDisplay">Full Info</h5>
-                <p>BrandName: <b>@item.BrandName</b></p>
-                <p>ModelName: <b>@item.ModelName</b></p>
-                <p>Price: <b>@item.Price</b></p>
-              
-            </div>
-
-        </div>
+        }
     }
-}
+
+
+</div>*@
+
+<nav aria-label="nav example">
+    @if (this.Model != null)
+    {
+        @await this.Component.InvokeAsync("Pager", new { pagingList = this.Model })
+        //<vc:pager paging-list="@Model" />
+    }
+
+</nav>

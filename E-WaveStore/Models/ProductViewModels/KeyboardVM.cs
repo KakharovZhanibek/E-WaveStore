@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace E_WaveStore.Models
 {
-    public class KeyboardVM : BaseVM
+    public class KeyboardVM
     {
         public int KeysAmount { get; set; }
         public string ConnectionType { get; set; }
