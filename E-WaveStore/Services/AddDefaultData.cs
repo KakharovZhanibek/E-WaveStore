@@ -60,11 +60,11 @@ namespace E_WaveStore.Services
             };
             string JSONString_1 = string.Empty;
             JSONString_1 = JsonConvert.SerializeObject(keyboard_1);
-            _specificationRepository.Save(
+           /* _specificationRepository.Save(
                 new Specification
                 {
                     Characteristics = JSONString_1
-                });
+                });*/
             /*
                 KeyboardVM keyboard_2 = new KeyboardVM
                 {

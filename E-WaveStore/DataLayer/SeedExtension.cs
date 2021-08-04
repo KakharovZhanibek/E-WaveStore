@@ -19,102 +19,137 @@ namespace E_WaveStore.DataLayer
         {
             using (var scope = host.Services.CreateScope())
             {
-                 CreateDefaultCategory(scope.ServiceProvider);
-                /*
-                  CreateDefaultKeyboard(scope.ServiceProvider);
-                  CreateDefaultLaptop(scope.ServiceProvider);
-                  CreateDefaultMonitor(scope.ServiceProvider);
-                  CreateDefaultMonoblock(scope.ServiceProvider);
-                  CreateDefaultMouse(scope.ServiceProvider);
-                  CreateDefaultPhone(scope.ServiceProvider);
-                  CreateDefaultSmartWatch(scope.ServiceProvider);
-                  CreateDefaultTv(scope.ServiceProvider);*/
+               // CreateDefaultSpecification(scope.ServiceProvider);
+                CreateDefaultCategory(scope.ServiceProvider);
+                CreateDefaultProduct(scope.ServiceProvider);
+                /*CreateDefaultCategory(scope.ServiceProvider);
+
+                 CreateDefaultKeyboard(scope.ServiceProvider);
+                 CreateDefaultLaptop(scope.ServiceProvider);
+                 CreateDefaultMonitor(scope.ServiceProvider);
+                 CreateDefaultMonoblock(scope.ServiceProvider);
+                 CreateDefaultMouse(scope.ServiceProvider);
+                 CreateDefaultPhone(scope.ServiceProvider);
+                 CreateDefaultSmartWatch(scope.ServiceProvider);
+                 CreateDefaultTv(scope.ServiceProvider);*/
 
                 //CreateDefaultSpecification(scope.ServiceProvider);
-
-
             }
 
             return host;
         }
 
-        /* public static void CreateDefaultSpecification(IServiceProvider serviceProvider)
-         {
-             var specificationRepository = serviceProvider.GetService<ISpecificationRepository>();
-             KeyboardVM keyboard_1 = new KeyboardVM
-             {
-                 KeysAmount = 112,
-                 ConnectionType = "Wired",
-                 Layout = "qwerty",
-                 Dimension = "44.2 x 4.9 x 13.2",
-                 KeyType = "Mechanical",
-                 Color = "Black",
-                 BackLight = "RGB"
-             };
+        public static void CreateDefaultProduct(IServiceProvider serviceProvider)
+        {
 
-             KeyboardVM keyboard_2 = new KeyboardVM
-             {
-                 KeysAmount = 112,
-                 ConnectionType = "Wireless",
-                 Layout = "qwerty",
-                 Dimension = "44.4 x 3.7 x 13.2",
-                 KeyType = "Mechanical",
-                 Color = "Black",
-                 BackLight = "RGB"
-             };
+            var productRepository = serviceProvider.GetService<IProductRepository>();
+            var specificationRepository = serviceProvider.GetService<ISpecificationRepository>();
+            var specificationById = specificationRepository.Get(1);
+            Category category = new Category();
+            Product product_1 = new Product
+            {
+                BrandName = "A4tech",
+                ModelName = "Bloody B500n",
+                Price = 15000,
+                Amount = 32,
+                ImgUrl = "https://shop.kz/upload/iblock/4d6/151222_1.jpg",
+                Category = category,
+                SpecificationId = 1,
+                Specification = specificationById
+            };
 
-             KeyboardVM keyboard_3 = new KeyboardVM
-             {
-                 KeysAmount = 112,
-                 ConnectionType = "Wireless",
-                 Layout = "qwerty",
-                 Dimension = "44.4 x 3.7 x 13.2",
-                 KeyType = "optic-mechanical",
-                 Color = "Black",
-                 BackLight = "Red"
-             };
+            string JSONString_1 = string.Empty;
+            JSONString_1 = JsonConvert.SerializeObject(product_1);
+            Console.WriteLine(JSONString_1);
 
-             KeyboardVM keyboard_4 = new KeyboardVM
-             {
-                 KeysAmount = 117,
-                 ConnectionType = "Wireless",
-                 Layout = "qwerty",
-                 Dimension = "37.3 x 2.1 x 14.4",
-                 KeyType = "membrane",
-                 Color = "Black",
-                 BackLight = "Blue"
-             };
-             string JSONString_1 = string.Empty;
-             string JSONString_2 = string.Empty;
-             string JSONString_3 = string.Empty;
-             string JSONString_4 = string.Empty;
-             JSONString_1 = JsonConvert.SerializeObject(keyboard_1);
-             JSONString_2 = JsonConvert.SerializeObject(keyboard_2);
-             JSONString_3 = JsonConvert.SerializeObject(keyboard_3);
-             JSONString_4 = JsonConvert.SerializeObject(keyboard_4);
+            productRepository.Save(product_1);
+        }
 
-             specificationRepository.Save(
-                 new Specification
-                 {
-                     Characteristics = JSONString_1
-                 });
-             specificationRepository.Save(
-                 new Specification
-                 {
-                     Characteristics = JSONString_2
-                 });
-             specificationRepository.Save(
-                 new Specification
-                 {
-                     Characteristics = JSONString_3
-                 });
-             specificationRepository.Save(
-                 new Specification
-                 {
-                     Characteristics = JSONString_4
-                 });
-         }
- */
+        public static void CreateDefaultSpecification(IServiceProvider serviceProvider)
+        {
+            var specificationRepository = serviceProvider.GetService<ISpecificationRepository>();
+            KeyboardVM keyboard_1 = new KeyboardVM
+            {
+                KeysAmount = 112,
+                ConnectionType = "Wired",
+                Layout = "qwerty",
+                Dimension = "44.2 x 4.9 x 13.2",
+                KeyType = "Mechanical",
+                Color = "Black",
+                BackLight = "RGB"
+            };
+
+            string JSONString_1 = string.Empty;
+            JSONString_1 = JsonConvert.SerializeObject(keyboard_1);
+
+            Specification specification_1 = JsonConvert.DeserializeObject<Specification>(JSONString_1);
+            specificationRepository.Save(specification_1);
+
+            //var specification_1 = _mapper.Map<Specification>(keyboard_1);          
+
+            /*  KeyboardVM keyboard_2 = new KeyboardVM
+              {
+                  KeysAmount = 112,
+                  ConnectionType = "Wireless",
+                  Layout = "qwerty",
+                  Dimension = "44.4 x 3.7 x 13.2",
+                  KeyType = "Mechanical",
+                  Color = "Black",
+                  BackLight = "RGB"
+              };
+
+              KeyboardVM keyboard_3 = new KeyboardVM
+              {
+                  KeysAmount = 112,
+                  ConnectionType = "Wireless",
+                  Layout = "qwerty",
+                  Dimension = "44.4 x 3.7 x 13.2",
+                  KeyType = "optic-mechanical",
+                  Color = "Black",
+                  BackLight = "Red"
+              };
+
+              KeyboardVM keyboard_4 = new KeyboardVM
+              {
+                  KeysAmount = 117,
+                  ConnectionType = "Wireless",
+                  Layout = "qwerty",
+                  Dimension = "37.3 x 2.1 x 14.4",
+                  KeyType = "membrane",
+                  Color = "Black",
+                  BackLight = "Blue"
+              };
+              string JSONString_1 = string.Empty;
+              string JSONString_2 = string.Empty;
+              string JSONString_3 = string.Empty;
+              string JSONString_4 = string.Empty;
+              JSONString_1 = JsonConvert.SerializeObject(keyboard_1);
+              JSONString_2 = JsonConvert.SerializeObject(keyboard_2);
+              JSONString_3 = JsonConvert.SerializeObject(keyboard_3);
+              JSONString_4 = JsonConvert.SerializeObject(keyboard_4);
+
+              specificationRepository.Save(
+                  new Specification
+                  {
+                      Characteristics = JSONString_1
+                  });
+              specificationRepository.Save(
+                  new Specification
+                  {
+                      Characteristics = JSONString_2
+                  });
+              specificationRepository.Save(
+                  new Specification
+                  {
+                      Characteristics = JSONString_3
+                  });
+              specificationRepository.Save(
+                  new Specification
+                  {
+                      Characteristics = JSONString_4
+                  });*/
+        }
+
 
         private static void CreateDefaultCategory(IServiceProvider serviceProvider)
         {
@@ -124,14 +159,12 @@ namespace E_WaveStore.DataLayer
 
             if (!categories)
             {
-                List<long> categoryIds = new List<long>() { 1, 2, 3, 4, 5, 6, 7, 8 };
                 List<string> categoryNames = new List<string>() { "Keyboards", "Laptops", "Monitors", "Monoblocks", "Mice", "Phones", "Smart Watches", "Tv" };
 
-                for (int i = 0; i < categoryIds.Count; i++)
+                for (int i = 0; i < categoryNames.Count; i++)
                 {
                     Category category = new Category()
                     {
-                        Id = categoryIds[i],
                         CategoryName = categoryNames[i]
                     };
 

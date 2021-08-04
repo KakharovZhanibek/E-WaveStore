@@ -11,6 +11,8 @@ using E_WaveStore.Services;
 using Microsoft.AspNetCore.Identity;
 using E_WaveStore.DataLayer.Models;
 using E_WaveStore.DataLayer.Repositories.Interfaces;
+using E_WaveStore.DataLayer;
+using Microsoft.Extensions.Hosting;
 
 namespace E_WaveStore.Controllers
 {
@@ -20,22 +22,27 @@ namespace E_WaveStore.Controllers
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<User> _userManager;
         private readonly ISpecificationRepository _specificationRepository;
+        private readonly IHost _host;
 
-        public HomeController(ILogger<HomeController> logger, RoleManager<IdentityRole> roleManager, 
-                             UserManager<User> userManager, ISpecificationRepository specificationRepository)
+        public HomeController(ILogger<HomeController> logger, RoleManager<IdentityRole> roleManager,
+                             UserManager<User> userManager, ISpecificationRepository specificationRepository, IHost host = null)
         {
             _logger = logger;
             _roleManager = roleManager;
             _userManager = userManager;
             _specificationRepository = specificationRepository;
+            _host = host;
         }
 
         public async Task<IActionResult> IndexAsync()
         {
-            AddDefaultData defaultRoles = new AddDefaultData(_roleManager, _userManager, _specificationRepository);
+         /*   AddDefaultData defaultRoles = new AddDefaultData(_roleManager, _userManager, _specificationRepository);
             await defaultRoles.CreateRoles();
             await defaultRoles.AddAdmin();
-            defaultRoles.CreateDefaultSpecification();
+            defaultRoles.CreateDefaultSpecification();*/
+            SeedExtention.Seed(_host);
+
+
             return View();
         }
 
