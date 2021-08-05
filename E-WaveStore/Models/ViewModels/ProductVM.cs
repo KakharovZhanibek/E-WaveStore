@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace E_WaveStore.Models.ViewModels
 {
-    public class ProductVM : BaseVM
+    public class ProductVM
     {
         public string BrandName { get; set; }
         public string ModelName { get; set; }
@@ -16,5 +16,6 @@ namespace E_WaveStore.Models.ViewModels
         public IFormFile ImgFile { get; set; }
         public long SpecificationId { get; set; }
         public CategoryVM CategoryVM { get; set; }
+        public string Specification { get; set; }
     }
 }

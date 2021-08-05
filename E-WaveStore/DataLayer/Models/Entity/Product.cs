@@ -19,6 +19,7 @@ namespace E_WaveStore.DataLayer.Models.Entity
         public string ImgUrl { get; set; }
         public long SpecificationId { get; set; }
         public Category Category { get; set; }
-        public Specification Specification { get; set; }
+       // public Specification Specification { get; set; }
+        public string Specification { get; set; }
     }
 }
