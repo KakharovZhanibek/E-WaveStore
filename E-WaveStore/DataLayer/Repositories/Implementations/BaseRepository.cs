@@ -29,28 +29,10 @@ namespace E_WaveStore.DataLayer.Repositories.Implementations
             return _dbSet.ToList();
         }
 
-        /* public DbModel Save(DbModel model)
-         {
-             if (model.Id > 0)
-             {
-                 //_dbSet.Update(model);
-                 _storeDbContext.Entry(model).State = EntityState.Modified;
-             }
-             else
-             {
-                 _dbSet.Add(model);
-             }
-
-             _storeDbContext.SaveChanges();
-
-             return model;
-         }*/
-
         public DbModel Save(DbModel model)
         {
             if (model.Id > 0)
             {
-                //_dbSet.Update(model);
                 _storeDbContext.Entry(model).State = EntityState.Modified;
             }
             else
@@ -68,12 +50,12 @@ namespace E_WaveStore.DataLayer.Repositories.Implementations
             _dbSet.Remove(model);
             _storeDbContext.SaveChanges();
         }
-/*
-        public void Update(DbModel model)
-        {
-            _storeDbContext.Entry(model).State = EntityState.Modified;
-            _storeDbContext.SaveChanges();
-        }*/
+        /*
+                public void Update(DbModel model)
+                {
+                    _storeDbContext.Entry(model).State = EntityState.Modified;
+                    _storeDbContext.SaveChanges();
+                }*/
 
         public IQueryable<DbModel> GetAllAsIQueryable()
         {

@@ -19,5 +19,11 @@ namespace E_WaveStore.DataLayer.Repositories.Implementations
         {
             return _storeDbContext.Products.Where(x => x.BrandName == brandName).ToList();
         }
+
+        public List<Product> GetAllByCategoryName(string categoryName)
+        {
+            return _storeDbContext.Products.Where(x => x.Category.CategoryName == categoryName).ToList();
+        }
+
     }
 }

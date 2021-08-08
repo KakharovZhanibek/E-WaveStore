@@ -9,10 +9,6 @@ namespace E_WaveStore.DataLayer.Entity
 {
     public class Laptop : CommonProperty
     {
-        /* public string BrandName { get; set; }
-         public string ModelName { get; set; }*/
-        /*  public string ScreenResolution { get; set; }
-          public int ScreenDiagonal { get; set; }*/
         [MaxLength(100)]
         public string OperationalSystem { get; set; }
         [MaxLength(100)]
@@ -23,10 +19,5 @@ namespace E_WaveStore.DataLayer.Entity
         public string Hdd { get; set; } // not      
         [MaxLength(50)]
         public string Ssd { get; set; }
-
-        /* public string Color { get; set; }
-         public int Weight { get; set; }*/
-
-        /*   public Category category { get; set; }*/
     }
 }

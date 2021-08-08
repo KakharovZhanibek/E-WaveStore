@@ -1,11 +1,12 @@
-﻿using System;
+﻿using E_WaveStore.Models.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace E_WaveStore.Models
 {
-    public abstract class CommonPropertyVM : BaseVM
+    public abstract class CommonPropertyVM : ProductVM
     {
         public float DisplayDiagonal { get; set; }
         public string DisplayResolution { get; set; } // 2400*1800

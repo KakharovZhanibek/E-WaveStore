@@ -1,0 +1,63 @@
+﻿@model TvVM
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 offset-3">
+            <h1>Edit Tv Data</h1>
+
+            <form action="/Tv/AddNewOrEditTv" method="post" enctype="multipart/form-data">
+
+                <div>
+                    Avatar: <input class="form-control" type="file" name="@nameof(TvVM.ImgFile)" />
+                </div>
+                <div>
+                    BrandName: @Html.TextBoxFor(x => x.BrandName, new { Class = "form-control", @required = "required" })
+                </div>
+                <div>
+                    ModelName: @Html.TextBoxFor(x => x.ModelName, new { Class = "form-control", @required = "required" })
+                </div>
+                <div>
+                    Price: @Html.TextBoxFor(x => x.Price, new { Class = "form-control", @required = "required" })
+                </div>
+                <div>
+                    Amount: @Html.TextBoxFor(x => x.Amount, new { Class = "form-control", @required = "required" })
+                </div>
+                <div>
+                    CategoryName: @Html.TextBoxFor(x => x.Category.CategoryName, new { Class = "form-control", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.Category.CategoryName)
+                </div>
+
+
+                <div>
+                    Smart : @Html.TextBoxFor(x => x.Smart, new { Class = "form-control", @required = "required" })
+                </div>
+                <div>
+                    Wifi : @Html.TextBoxFor(x => x.Wifi, new { Class = "form-control", @required = "required" })
+                </div>
+                <div>
+                    Frequency : @Html.TextBoxFor(x => x.Frequency, new { Class = "form-control", @required = "required" })
+                </div>
+                <div>
+                    Platform : @Html.TextBoxFor(x => x.Platform, new { Class = "form-control", @required = "required" })
+                </div>
+                <div>
+                    DisplayDiagonal : @Html.TextBoxFor(x => x.DisplayDiagonal, new { Class = "form-control", @required = "required" })
+                </div>
+                <div>
+                    DisplayResolution : @Html.TextBoxFor(x => x.DisplayResolution, new { Class = "form-control", @required = "required" })
+                </div>
+                <div>
+                    Weight: @Html.TextBoxFor(x => x.Weight, new { Class = "form-control", @required = "required" })
+                </div>
+                <div>
+                    Color: @Html.TextBoxFor(x => x.Color, new { Class = "form-control", @required = "required" })
+                </div>
+
+                <div class="topMargin20 bottomMargin50">
+                    <input class="btn btn-primary" type="submit" value="Save Changes" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

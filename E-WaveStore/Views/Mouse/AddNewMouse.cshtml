@@ -1,0 +1,68 @@
+﻿@model MouseVM
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 offset-3">
+            <h1>Edit Mouse Data</h1>
+
+            <form action="/Mouse/AddNewOrEditMouse" method="post" enctype="multipart/form-data">
+
+                <div>
+                    Avatar: <input class="form-control" type="file" name="@nameof(MouseVM.ImgFile)" />
+                </div>
+                <div>
+                    BrandName: @Html.TextBoxFor(x => x.BrandName, new { Class = "form-control", @required = "required" })
+                </div>
+                <div>
+                    ModelName: @Html.TextBoxFor(x => x.ModelName, new { Class = "form-control", @required = "required" })
+                </div>
+                <div>
+                    Price: @Html.TextBoxFor(x => x.Price, new { Class = "form-control", @required = "required" })
+                </div>
+                <div>
+                    Amount: @Html.TextBoxFor(x => x.Amount, new { Class = "form-control", @required = "required" })
+                </div>
+                <div>
+                    CategoryName: @Html.TextBoxFor(x => x.Category.CategoryName, new { Class = "form-control", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.Category.CategoryName)
+                </div>
+
+                @*
+        public string BackLight { get; set; }
+        public string Connection { get; set; } // проводной/беспроводной
+        public int ButtonAmount { get; set; }
+        public string Type { get; set; } // sensory, laser, optical
+        public int OpticalResolution { get; set; } // 4800 Dpi
+        public int Weight { get; set; }
+        public string Color { get; set; }*@
+
+                <div>
+                    BackLight : @Html.TextBoxFor(x => x.BackLight, new { Class = "form-control", @required = "required" })
+                </div>
+                <div>
+                    Connection: @Html.TextBoxFor(x => x.Connection, new { Class = "form-control", @required = "required" })
+                </div>
+                <div>
+                    ButtonAmount: @Html.TextBoxFor(x => x.ButtonAmount, new { Class = "form-control", @required = "required" })
+                </div>
+                <div>
+                    Type: @Html.TextBoxFor(x => x.Type, new { Class = "form-control", @required = "required" })
+                </div>
+                <div>
+                    OpticalResolution: @Html.TextBoxFor(x => x.OpticalResolution, new { Class = "form-control", @required = "required" })
+                </div>
+                <div>
+                    Weight: @Html.TextBoxFor(x => x.Weight, new { Class = "form-control", @required = "required" })
+                </div>
+                <div>
+                    Color: @Html.TextBoxFor(x => x.Color, new { Class = "form-control", @required = "required" })
+                </div>
+
+                <div class="topMargin20 bottomMargin50">
+                    <input class="btn btn-primary" type="submit" value="Save Changes" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

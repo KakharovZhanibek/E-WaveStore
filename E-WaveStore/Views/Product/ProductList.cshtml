@@ -1,0 +1,80 @@
+﻿@model ReflectionIT.Mvc.Paging.PagingList<E_WaveStore.Models.ViewModels.ProductVM>
+@using ReflectionIT.Mvc.Paging
+@addTagHelper *,ReflectionIT.Mvc.Paging
+
+@{
+    ViewData["Title"] = "ProductList";
+}
+
+@section Scripts{
+    <script src="~/js/product.js"></script>
+}
+
+
+<div class="container" style="display:flex; padding:20px;">
+    <div>
+        <form asp-action="StudentListAndSearch" method="get">
+            <!--<p>
+                <b> Search By: </b>-->
+                @*потом сделать поиск по BrandName and ModelName *@
+
+            <!--</p>
+            <br />-->
+            <p>
+                <input type="search"
+                       placeholder="Search By Brand Name..."
+                       name="searchStudent"
+                       class="width400" />
+                <input type="submit" value="Search" class="btn btn-primary leftMargin15" />
+
+                <a class="btn btn-primary leftMargin15" asp-action="ProductList">Get All</a>
+                @*<a class="btn btn-primary leftMargin15" asp-controller="Keyboard" asp-action="AddNewKeyboard">Add New Keyboard</a>*@
+
+
+            </p>
+        </form>
+    </div>
+</div>
+
+<section class="pt-5 pb-5">
+    <div class="container" style="display: flex; flex-direction: row; flex-wrap: wrap;">
+
+        @if (Model != null)
+        {
+            @foreach (var item in Model)
+            {
+                <div class="card deleteCard" style="width: 30%; padding: 20px;">
+                    <img class="img-fluid" alt="100%x280" src=@(item.ImgUrl == null ? "/Images/ProductImages/noImage.png" : $"{item.ImgUrl}")>
+                    <div class="card-body">
+                        <h4 class="card-title">@item.BrandName</h4>
+                        <p class="card-text">@Html.ActionLink(@item.ModelName, "ProductFullInfo", new { keyboardModelName = item.ModelName })</p>
+                        <p class="card-text">@item.Price</p>
+                    </div>
+                    @if (User.IsInRole("admin"))
+                    {
+                        <div style="display: flex; justify-content: space-between;">
+                            <button style="width: 120px; background-color: #f7d24c; /*#f6ba4d;*/ border-color: #ccc506;" class="btn editBtn edit" type="submit">
+                                @Html.ActionLink("Edit", "EditProductData", "Product", new { modelName = item.ModelName })
+                            </button>
+                            <input style="width:120px" class="btn btn-danger deleteProduct" data-name="@item.ModelName" type="button" value="Delete" />
+                        </div>
+                    }
+
+                </div>
+            }
+        }
+
+    </div>
+</section>
+
+
+
+
+<nav aria-label="nav example">
+    @if (this.Model != null)
+    {
+        @await this.Component.InvokeAsync("Pager", new { pagingList = this.Model })
+        //<vc:pager paging-list="@Model" />
+    }
+
+</nav>

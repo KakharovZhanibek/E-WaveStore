@@ -7,30 +7,65 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/style.css" />
+
+   
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+   
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+
 </head>
 <body>
     <header class="p-3 bg-dark text-white">
-        <div style="display:flex; justify-content:space-between; align-content:center;">
-            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-               @* <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-                    <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap" /></svg>
-                </a>
-                   
-*@
+        <div class="col-sm-8 offset-2" style="display:flex; justify-content:space-between; align-items:center;">
+            <div style="display:flex;">
                 <a href="#">
-                    <img src="/Images/Logo_2.png" alt="logo" style="width:100px;">
+                    <img src="/Images/Logo_1.png" alt="logo" style="width:120px;">
                 </a>
-                <a style="color: #ffc107;" class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">E_WaveStore</a>
-               @* <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>*@
+
 
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
 
                     <li> <a class="nav-link px-2 text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a> </li>
-                    <li> <a class="nav-link px-2 text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a> </li>
-                    <li> <a class="nav-link px-2 text-white" asp-area="" asp-controller="Keyboard" asp-action="KeyboardList">Keyboard List</a> </li>
+                    <li class="nav-item dropdown">
+                        <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            Categories
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li>
+                                <a class="dropdown-item nav-link text-dark" asp-controller="Product" asp-action="ProductList" asp-route-categoryName="Keyboards">Keyboards</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item nav-link text-dark" asp-controller="Product" asp-action="ProductList" asp-route-categoryName="Laptops">Laptops</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item nav-link text-dark" asp-controller="Product" asp-action="ProductList" asp-route-categoryName="Monitors">Monitors</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item nav-link text-dark" asp-controller="Product" asp-action="ProductList" asp-route-categoryName="Monoblocks">Monoblocks</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item nav-link text-dark" asp-controller="Product" asp-action="ProductList" asp-route-categoryName="Mice">Mice</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item nav-link text-dark" asp-controller="Product" asp-action="ProductList" asp-route-categoryName="Phones">Phones</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item nav-link text-dark" asp-controller="Product" asp-action="ProductList" asp-route-categoryName="Smart Watches">Smart Watches</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item nav-link text-dark" asp-controller="Product" asp-action="ProductList" asp-route-categoryName="Tv">Tv</a>
+                            </li>
+                        </ul>
+                    <li />
+
+                    @* <li> <a class="nav-link px-2 text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a> </li>
+                        <li> <a class="nav-link px-2 text-white" asp-area="" asp-controller="Keyboard" asp-action="KeyboardList">Keyboard List</a> </li>*@
 
                     @if (User.IsInRole("admin"))
                     {
@@ -38,6 +73,9 @@
                     }
                 </ul>
 
+            </div>
+
+            <div style="display:flex;">
                 <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
                     <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
                 </form>
@@ -46,16 +84,16 @@
                     @if (!User.Identity.IsAuthenticated)
                     {
                         <a class="nav-link px-2 text-white" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
-                            <a class="nav-link px-2 text-white" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
+                        <a class="nav-link px-2 text-white" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
                     }
                     else
                     {
                         <a class="nav-link px-2 text-white">Hello, @User.Identity.Name</a>
 
-                        <form method="post" asp-controller="Account" asp-action="Logout">                          
+                        <form method="post" asp-controller="Account" asp-action="Logout">
                             <button type="submit" class="btn btn-warning" style="padding:0; border: none; background: none; text-decoration:none">
                                 <a class="nav-link px-2 text-white">Log out</a>
-                            </button>                           
+                            </button>
                         </form>
 
                     }
@@ -65,21 +103,232 @@
                 </div>
             </div>
         </div>
+
     </header>
     <div class="container">
-        <main role="main" class="pb-3">
+        <main role="main" class="pb-5">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+
+    <footer class="container border-top footer">
+
         <div class="container">
-            &copy; 2021 - E_WaveStore - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <div class="flexContainer">
+
+
+                <div class="foot2">
+                    <div class="footLogo">
+                        <div class="logoWrapper">
+                            <a href="#">
+                                <img src="/Images/Logo_1.png" alt="Logo">
+                            </a>
+
+                        </div>
+                        <div class="foot2textWrapper">
+
+                            <p class="address font12">
+                                E-Wave Store Society, 234 <br> Bahagia Ave Street PRBW 29281
+                            </p>
+                            <p class="post font12">
+                                info@E-WaveStore.project <br> 1-232-3434 (Main)
+                            </p>
+
+                        </div>
+                    </div>
+
+                    <div class="footerNavsWrapper">
+
+                        <nav class="footerNav font12">
+                            <h6 class="footTitle font12">About</h6>
+                            <menu class="menu">
+                                <li>
+                                    <a href="#about" class="navLink whiteLink">Profile</a>
+                                </li>
+                                <li>
+                                    <a href="#features" class="navLink whiteLink">Features</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="navLink whiteLink">Careers</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="navLink whiteLink">DW News</a>
+                                </li>
+                            </menu>
+                        </nav>
+
+                        <nav class="footerNav font12">
+                            <h6 class="footTitle font12">Help</h6>
+                            <menu class="menu">
+                                <li>
+                                    <a href="#" class="navLink whiteLink">Support</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="navLink whiteLink">Sign up</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="navLink whiteLink">Guide</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="navLink whiteLink">Reports</a>
+                                </li>
+                            </menu>
+                        </nav>
+
+                        <nav class="iconsNav">
+                            <h6 class="footTitle font12">Social Media</h6>
+                            <div class="icons">
+                                <div class="circle cursor">
+                                    <i class="fa fa-facebook icon cursor" aria-hidden="true"></i>
+                                </div>
+                                <div class="circle cursor">
+                                    <i class="fa fa-twitter icon" aria-hidden="true"></i>
+                                </div>
+                                <div class="circle cursor">
+                                    <i class="fa fa-instagram icon" aria-hidden="true"></i>
+                                </div>
+
+                            </div>
+                        </nav>
+
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="container">
+            @* &copy; 2021 - E-WaveStore - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>*@
+            &copy; E-Wave Store™, 2021. All rights reserved. Company Registration Number: 21479524.
         </div>
     </footer>
+
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>
+
+<style>
+    .footer {
+        position: relative;
+        line-height:40px;
+    }
+
+    /* TEXT WRAPPER */
+
+    .footTextWrapper {
+        width: 584px;
+        height: 105px;
+    }
+
+    .footTitleWrapper {
+        padding: 0 1.3px;
+        font-size: 40px;
+        font-weight: bold;
+    }
+
+    .footSubtext {
+        font-size: medium;
+    }
+
+    .foot2 {
+
+        width: 100%;
+        display: flex;
+    }
+
+    .footLogo {
+        width: 100%;
+    }
+
+    .footLogoText {
+        font-size: 20px;
+        font-weight: bold;
+        margin-left: 15px;
+    }
+
+    .address {
+        font-size: medium;
+        font-weight: bold;
+
+    }
+
+    .copyright {
+        margin-top: 125px;
+    }
+
+    .footerNavsWrapper {
+        display: flex;
+        width: 100%;
+        text-align: left;
+        margin: 25px 0 0 0;
+    }
+
+    .footerNav {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        margin-right: 50px;
+    }
+
+    .footTitle {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 50px;
+    }
+
+    .menu {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        line-height: 2.7;
+    }
+
+    /* icons */
+
+    .icons {
+        display: flex;
+    }
+
+    .circle {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 10px 0 0;
+        width: 50px;
+        height: 50px;
+        background: #020311;
+        border-radius: 50%;
+        opacity: 0.2;
+    }
+
+        .circle:hover {
+            background: #007bff; @*#f5a0f1*@
+            opacity: 1;
+        }
+
+    .iconsNav {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .icon {
+        color: #ffffff;
+    }
+
+    .foot2textWrapper {
+        max-width: 100%;
+    }
+
+    .cursor {
+        cursor: pointer;
+    }
+
+</style>

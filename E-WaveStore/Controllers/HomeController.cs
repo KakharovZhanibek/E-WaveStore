@@ -19,30 +19,17 @@ namespace E_WaveStore.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly UserManager<User> _userManager;
-        private readonly ISpecificationRepository _specificationRepository;
         private readonly IHost _host;
 
-        public HomeController(ILogger<HomeController> logger, RoleManager<IdentityRole> roleManager,
-                             UserManager<User> userManager, ISpecificationRepository specificationRepository, IHost host = null)
+        public HomeController(ILogger<HomeController> logger, IHost host = null)
         {
             _logger = logger;
-            _roleManager = roleManager;
-            _userManager = userManager;
-            _specificationRepository = specificationRepository;
             _host = host;
         }
 
         public async Task<IActionResult> IndexAsync()
         {
-         /*   AddDefaultData defaultRoles = new AddDefaultData(_roleManager, _userManager, _specificationRepository);
-            await defaultRoles.CreateRoles();
-            await defaultRoles.AddAdmin();
-            defaultRoles.CreateDefaultSpecification();*/
-            SeedExtention.Seed(_host);
-
-
+            await SeedExtention.SeedAsync(_host);
             return View();
         }
 

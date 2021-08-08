@@ -8,9 +8,11 @@ using AutoMapper.Configuration;
 using E_WaveStore.DataLayer;
 using E_WaveStore.DataLayer.Entity;
 using E_WaveStore.DataLayer.Models;
+using E_WaveStore.DataLayer.Models.Entity;
 using E_WaveStore.DataLayer.Repositories.Implementations;
 using E_WaveStore.DataLayer.Repositories.Interfaces;
 using E_WaveStore.Models;
+using E_WaveStore.Models.ViewModels;
 using E_WaveStore.PresentationLayer.Implementations;
 using E_WaveStore.PresentationLayer.Interfaces;
 using Microsoft.AspNetCore.Builder;
@@ -41,9 +43,9 @@ namespace E_WaveStore
 
             services.AddRazorPages()
                  .AddRazorRuntimeCompilation();
-
             services.AddDbContext<ApplicationContext>(options =>
-               options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                        options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")),
+             ServiceLifetime.Transient);
 
             services.AddIdentity<User, IdentityRole>(opts =>
             {
@@ -58,9 +60,18 @@ namespace E_WaveStore
 
 
             RegisterRepositories(services);
+            services.AddScoped<ICategoryPresentation, CategoryPresentation>();
 
-            //services.AddScoped<IKeyboardPresentation, KeyboardPresentation>();
-  
+            services.AddScoped<IKeyboardPresentation, KeyboardPresentation>();                       
+            services.AddScoped<ILaptopPresentation, LaptopPresentation>();
+            services.AddScoped<IMonitorPresentation, MonitorPresentation>();
+            services.AddScoped<IMonoblockPresentation, MonoblockPresentation>();
+            services.AddScoped<IMousePresentation, MousePresentation>();
+            services.AddScoped<IProductPresentation<ProductVM>, ProductPresentation<ProductVM>>();
+            /* services.AddScoped<IPhonePresentation, PhonePresentation>();
+             services.AddScoped<ISmartWatchPresentation, SmartWatchPresentation>();
+             services.AddScoped<ITvPresentation, TvPresentation>();*/
+
             RegisterAutoMapper(services);
 
             services.AddSwaggerGen(c =>
@@ -100,15 +111,16 @@ namespace E_WaveStore
         {
             var configurationExp = new MapperConfigurationExpression();
 
-            //MapBothSide<Category, CategoryVM>(configurationExp);
-            MapBothSide<Keyboard, KeyboardVM>(configurationExp);
-            /*MapBothSide<Laptop, LaptopVM>(configurationExp);
-            MapBothSide<Monitor, MonitorVM>(configurationExp);
-            MapBothSide<MonoBlock, MonoBlockVM>(configurationExp);
-            MapBothSide<Mouse, MouseVM>(configurationExp);
-            MapBothSide<Phone, PhoneVm>(configurationExp);
-            MapBothSide<SmartWatch, SmartWatchVM>(configurationExp);
-            MapBothSide<Tv, TvVM>(configurationExp);*/
+            MapBothSide<Category, CategoryVM>(configurationExp);
+            MapBothSide<Product, ProductVM>(configurationExp);
+            MapBothSide<Product, KeyboardVM>(configurationExp);
+            MapBothSide<Product, LaptopVM>(configurationExp);
+            MapBothSide<Product, MonitorVM>(configurationExp);
+            MapBothSide<Product, MonoBlockVM>(configurationExp);
+            MapBothSide<Product, MouseVM>(configurationExp);
+            MapBothSide<Product, PhoneVm>(configurationExp);
+            MapBothSide<Product, SmartWatchVM>(configurationExp);
+            MapBothSide<Product, TvVM>(configurationExp);
 
             var config = new MapperConfiguration(configurationExp);
             var mapper = new Mapper(config);

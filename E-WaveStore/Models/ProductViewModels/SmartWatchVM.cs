@@ -1,11 +1,12 @@
-﻿using System;
+﻿using E_WaveStore.Models.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace E_WaveStore.Models
 {
-    public class SmartWatchVM : BaseVM
+    public class SmartWatchVM : ProductVM
     {
         public string BraceletMaterial { get; set; }
         public string BodyMaterial { get; set; }

@@ -21,7 +21,14 @@ namespace E_WaveStore.DataLayer
         }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
-        public DbSet<Specification> Specifications { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseLazyLoadingProxies();
+            
+            base.OnConfiguring(optionsBuilder);
+        }
+        /*public DbSet<Specification> Specifications { get; set; }*/
         /* public DbSet<Keyboard> Keyboards { get; set; }
          public DbSet<Laptop> Laptops { get; set; }
          public DbSet<Monitor> Monitors { get; set; }
@@ -30,5 +37,7 @@ namespace E_WaveStore.DataLayer
          public DbSet<Phone> Phones { get; set; }
          public DbSet<SmartWatch> SmartWatches { get; set; }
          public DbSet<Tv> Tvs { get; set; }*/
+
+
     }
 }

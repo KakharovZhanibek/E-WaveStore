@@ -4,3 +4,21 @@
 ul.pagination li, .margin10 {
     margin: 10px;
 }
+
+.editBtn {
+    
+    background-color: #f6ba4d; /*#f7d24c;*/
+    border-color: #ccc506;
+}
+
+    .editBtn:hover {
+        background-color: coral;
+    }
+
+.topMargin20 {
+    margin-top: 20px;
+}
+
+.bottomMargin50 {
+    margin-bottom: 50px;
+}

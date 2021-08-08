@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace E_WaveStore.PresentationLayer.Interfaces
 {
-    public interface IKeyboardPresentation
+    public interface IKeyboardPresentation : IProductPresentation<KeyboardVM>
     {
-        //PagingList<KeyboardVM> GetKeyboardList(int page);
+        void GetAddNewOrEditKeyboardAsync(KeyboardVM model);
     }
 }

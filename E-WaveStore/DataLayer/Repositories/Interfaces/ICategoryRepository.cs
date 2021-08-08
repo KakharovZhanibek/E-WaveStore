@@ -9,6 +9,6 @@ namespace E_WaveStore.DataLayer.Repositories.Interfaces
 {
     public interface ICategoryRepository : IBaseRepository<Category>
     {
-
+        Category GetByCategoryName(string categoryName);
     }
 }

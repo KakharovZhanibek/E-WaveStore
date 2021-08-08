@@ -10,5 +10,6 @@ namespace E_WaveStore.DataLayer.Repositories.Interfaces
     {
         Product GetByModelName(string modelName);
         List<Product> GetAllByBrandName(string brandName);
+        List<Product> GetAllByCategoryName(string categoryName);
     }
 }

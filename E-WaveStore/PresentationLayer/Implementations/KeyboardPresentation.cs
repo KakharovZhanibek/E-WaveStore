@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using E_WaveStore.DataLayer.Models.Entity;
 using E_WaveStore.DataLayer.Repositories.Interfaces;
 using E_WaveStore.Models;
 using E_WaveStore.PresentationLayer.Interfaces;
@@ -10,31 +11,28 @@ using System.Threading.Tasks;
 
 namespace E_WaveStore.PresentationLayer.Implementations
 {
-    public class KeyboardPresentation : IKeyboardPresentation
+    public class KeyboardPresentation : ProductPresentation<KeyboardVM>, IKeyboardPresentation
     {
-        private IKeyboardRepository _keyboardRepository;
-   
-        private IMapper _mapper;
-
-        public const int PageSize = 5;
-
-        public KeyboardPresentation(IKeyboardRepository keyboardRepository, IMapper mapper)
+        private readonly IProductRepository _productRepository;
+        private readonly IMapper _mapper;
+        public KeyboardPresentation(IProductRepository productRepository, IMapper mapper) : base(productRepository, mapper)
         {
-            _keyboardRepository = keyboardRepository;
-            _mapper = mapper;            
+            _productRepository = productRepository;
+            _mapper = mapper;
         }
 
-       /* public PagingList<KeyboardVM> GetKeyboardList(int page)
+        public void GetAddNewOrEditKeyboardAsync(KeyboardVM model)
         {
-            var keyboards = _keyboardRepository
-               .GetAll()
-               .Select(x => _mapper.Map<KeyboardVM>(x))
-               .OrderByDescending(x => x.BrandName)
-               .ToList();
-            var model = PagingList.Create(keyboards, PageSize, page);
+            var product = _mapper.Map<Product>(model);
 
-            model.Action = "KeyboardList";
-            return model;
-        }*/
+            if (!(model.Id > 0))
+            {
+
+                product.Specification = $"{model.KeysAmount} {model.BackLight}";
+            }
+
+            _productRepository.Save(product);
+        }
+
     }
 }

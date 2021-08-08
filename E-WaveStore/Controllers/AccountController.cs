@@ -144,5 +144,10 @@ namespace E_WaveStore.Controllers
 
             return NotFound();
         }
+
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
     }
 }

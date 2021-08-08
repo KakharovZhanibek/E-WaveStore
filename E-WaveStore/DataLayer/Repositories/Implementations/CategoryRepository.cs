@@ -11,6 +11,10 @@ namespace E_WaveStore.DataLayer.Repositories.Implementations
     public class CategoryRepository : BaseRepository<Category>, ICategoryRepository
     {
         public CategoryRepository(ApplicationContext storeDbContext) : base(storeDbContext) { }
-
+          
+        public Category GetByCategoryName(string categoryName)
+        {
+            return _storeDbContext.Categories.SingleOrDefault(x => x.CategoryName == categoryName);
+        }
     }
 }
