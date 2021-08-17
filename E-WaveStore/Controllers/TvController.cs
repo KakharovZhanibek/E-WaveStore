@@ -23,20 +23,7 @@ namespace E_WaveStore.Controllers
             _webHostEnvironment = webHostEnvironment;
             _categoryPresentation = categoryPresentation;
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        [HttpGet]
-        public IActionResult TvList(int page = 1)
-        {
-            var actionName = "TvList";
-            var viewModels = _tvPresentation.GetList(CATEGORYNAME, actionName, page);
-
-            return View(viewModels);
-        }
-
+       
         [HttpGet]
         public IActionResult AddNewTv()
         {
@@ -49,14 +36,6 @@ namespace E_WaveStore.Controllers
             _tvPresentation.GetAddNewOrEditTvAsync(model);
 
             return View("TvList");
-        }
-
-        [HttpGet]
-        public IActionResult EditTvData(string modelName)
-        {
-            var tv = _tvPresentation.GetByModelName(modelName);
-
-            return View(tv);
         }
 
         [HttpPost]
@@ -81,11 +60,6 @@ namespace E_WaveStore.Controllers
 
             _tvPresentation.GetAddNewOrEditTvAsync(model);
             return RedirectToAction("TvList");
-        }
-
-        public JsonResult RemoveTv(string modelName)
-        {
-            return Json(_tvPresentation.Remove(modelName));
         }
     }
 }

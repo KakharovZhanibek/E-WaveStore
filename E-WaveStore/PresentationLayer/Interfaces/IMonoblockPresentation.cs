@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace E_WaveStore.PresentationLayer.Interfaces
 {
-    public interface IMonoblockPresentation : IProductPresentation<MonoBlockVM>
+    public interface IMonoblockPresentation
     {
         void GetAddNewOrEditMonoblockAsync(MonoBlockVM model);
     }

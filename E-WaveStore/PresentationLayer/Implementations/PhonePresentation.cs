@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace E_WaveStore.PresentationLayer.Implementations
 {
-    public class PhonePresentation : ProductPresentation<PhoneVm>, IPhonePresentation
+    public class PhonePresentation : IPhonePresentation
     {
         private readonly IProductRepository _productRepository;
         private readonly IMapper _mapper;
-        public PhonePresentation(IProductRepository productRepository, IMapper mapper) : base(productRepository, mapper)
+        public PhonePresentation(IProductRepository productRepository, IMapper mapper)
         {
             _productRepository = productRepository;
             _mapper = mapper;

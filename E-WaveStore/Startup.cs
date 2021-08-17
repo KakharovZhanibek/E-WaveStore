@@ -61,13 +61,17 @@ namespace E_WaveStore
 
             RegisterRepositories(services);
             services.AddScoped<ICategoryPresentation, CategoryPresentation>();
+            services.AddScoped<IProductPresentation, ProductPresentation>();
+            services.AddScoped<ICartPresentation, CartPresentation>();
+            services.AddScoped<IOrderPresentation, OrderPresentation>();
+            //services.AddScoped<IPaymentTypePresentation, PaymentTypePresentation>();
 
             services.AddScoped<IKeyboardPresentation, KeyboardPresentation>();                       
             services.AddScoped<ILaptopPresentation, LaptopPresentation>();
             services.AddScoped<IMonitorPresentation, MonitorPresentation>();
             services.AddScoped<IMonoblockPresentation, MonoblockPresentation>();
             services.AddScoped<IMousePresentation, MousePresentation>();
-            services.AddScoped<IProductPresentation<ProductVM>, ProductPresentation<ProductVM>>();
+            
             /* services.AddScoped<IPhonePresentation, PhonePresentation>();
              services.AddScoped<ISmartWatchPresentation, SmartWatchPresentation>();
              services.AddScoped<ITvPresentation, TvPresentation>();*/
@@ -121,6 +125,9 @@ namespace E_WaveStore
             MapBothSide<Product, PhoneVm>(configurationExp);
             MapBothSide<Product, SmartWatchVM>(configurationExp);
             MapBothSide<Product, TvVM>(configurationExp);
+            MapBothSide<Cart, CartVM>(configurationExp);
+            MapBothSide<Order, OrderVM>(configurationExp);
+            MapBothSide<PaymentType, PaymentTypeVM>(configurationExp);
 
             var config = new MapperConfiguration(configurationExp);
             var mapper = new Mapper(config);

@@ -22,20 +22,6 @@ namespace E_WaveStore.Controllers
             _webHostEnvironment = webHostEnvironment;
             _categoryPresentation = categoryPresentation;
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        [HttpGet]
-        public IActionResult MonoblockList(int page = 1)
-        {            
-            var actionName = "MonoblockList";
-            var viewModels = _monoblockPresentation.GetList(CATEGORYNAME, actionName, page);
-
-
-            return View(viewModels);
-        }
 
         [HttpGet]
         public IActionResult AddNewMonoblock()
@@ -49,14 +35,6 @@ namespace E_WaveStore.Controllers
             _monoblockPresentation.GetAddNewOrEditMonoblockAsync(model);
 
             return View("MonoblockList");
-        }
-
-        [HttpGet]
-        public IActionResult EditMonoblockData(string modelName)
-        {
-            var monoblock = _monoblockPresentation.GetByModelName(modelName);
-
-            return View(monoblock);
         }
 
         [HttpPost]
@@ -81,11 +59,6 @@ namespace E_WaveStore.Controllers
 
             _monoblockPresentation.GetAddNewOrEditMonoblockAsync(model);
             return RedirectToAction("MonoblockList");
-        }
-
-        public JsonResult RemoveMonoblock(string modelName)
-        {
-            return Json(_monoblockPresentation.Remove(modelName));
         }
     }
 }

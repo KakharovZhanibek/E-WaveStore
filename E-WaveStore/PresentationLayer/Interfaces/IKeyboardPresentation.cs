@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace E_WaveStore.PresentationLayer.Interfaces
 {
-    public interface IKeyboardPresentation : IProductPresentation<KeyboardVM>
+    public interface IKeyboardPresentation
     {
         void GetAddNewOrEditKeyboardAsync(KeyboardVM model);
     }

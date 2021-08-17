@@ -23,19 +23,6 @@ namespace E_WaveStore.Controllers
             _webHostEnvironment = webHostEnvironment;
             _categoryPresentation = categoryPresentation;
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        [HttpGet]
-        public IActionResult LaptopList(int page = 1)
-        {            
-            var actionName = "LaptopList";
-            var viewModels = _laptopPresentation.GetList(CATEGORYNAME, actionName, page);
-
-            return View(viewModels);
-        }
 
         [HttpGet]
         public IActionResult AddNewLaptop()
@@ -49,14 +36,6 @@ namespace E_WaveStore.Controllers
             _laptopPresentation.GetAddNewOrEditLaptopAsync(model);
 
             return View("LaptopList");
-        }
-
-        [HttpGet]
-        public IActionResult EditLaptopData(string modelName)
-        {
-            var laptop = _laptopPresentation.GetByModelName(modelName);
-
-            return View(laptop);
         }
 
         [HttpPost]
@@ -81,11 +60,6 @@ namespace E_WaveStore.Controllers
 
             _laptopPresentation.GetAddNewOrEditLaptopAsync(model);
             return RedirectToAction("LaptopList");
-        }
-
-        public JsonResult RemoveLaptop(string modelName)
-        {
-            return Json(_laptopPresentation.Remove(modelName));
         }
     }
 }

@@ -30,6 +30,7 @@ namespace E_WaveStore.Controllers
         public async Task<IActionResult> IndexAsync()
         {
             await SeedExtention.SeedAsync(_host);
+            _logger.LogInformation("Test Log Message");
             return View();
         }
 

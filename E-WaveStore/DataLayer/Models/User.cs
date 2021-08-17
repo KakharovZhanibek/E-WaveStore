@@ -8,6 +8,6 @@ namespace E_WaveStore.DataLayer.Models
 {
     public class User : IdentityUser
     {
-       
+      
     }
 }

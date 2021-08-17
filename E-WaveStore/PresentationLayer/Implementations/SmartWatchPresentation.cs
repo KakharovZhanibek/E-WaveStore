@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace E_WaveStore.PresentationLayer.Implementations
 {
-    public class SmartWatchPresentation : ProductPresentation<SmartWatchVM>, ISmartWatchPresentation
+    public class SmartWatchPresentation : ISmartWatchPresentation
     {
         private readonly IProductRepository _productRepository;
         private readonly IMapper _mapper;
-        public SmartWatchPresentation(IProductRepository productRepository, IMapper mapper) : base(productRepository, mapper)
+        public SmartWatchPresentation(IProductRepository productRepository, IMapper mapper)
         {
             _productRepository = productRepository;
             _mapper = mapper;
@@ -35,12 +35,3 @@ namespace E_WaveStore.PresentationLayer.Implementations
         }
     }
 }
-/*
- public string BraceletMaterial { get; set; }
-        public string BodyMaterial { get; set; }
-        public bool Wifi { get; set; }
-        public bool Bluetooth { get; set; }
-        public string Sensor { get; set; }
-        public int Weight { get; set; }
-        public string Color { get; set; }
- */

@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace E_WaveStore.PresentationLayer.Implementations
 {
-    public class KeyboardPresentation : ProductPresentation<KeyboardVM>, IKeyboardPresentation
+    public class KeyboardPresentation : IKeyboardPresentation
     {
         private readonly IProductRepository _productRepository;
         private readonly IMapper _mapper;
-        public KeyboardPresentation(IProductRepository productRepository, IMapper mapper) : base(productRepository, mapper)
+        public KeyboardPresentation(IProductRepository productRepository, IMapper mapper)
         {
             _productRepository = productRepository;
             _mapper = mapper;

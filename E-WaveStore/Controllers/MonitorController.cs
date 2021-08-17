@@ -23,19 +23,6 @@ namespace E_WaveStore.Controllers
             _webHostEnvironment = webHostEnvironment;
             _categoryPresentation = categoryPresentation;
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        [HttpGet]
-        public IActionResult MonitorList(int page = 1)
-        {
-            var actionName = "MonitorList";
-            var viewModels = _monitorPresentation.GetList(CATEGORYNAME, actionName, page);
-
-            return View("MonitorList", viewModels);
-        }
 
         [HttpGet]
         public IActionResult AddNewMonitor()
@@ -49,14 +36,6 @@ namespace E_WaveStore.Controllers
             _monitorPresentation.GetAddNewOrEditMonitorAsync(model);
 
             return View("MonitorList");
-        }
-
-        [HttpGet]
-        public IActionResult EditMonitorData(string modelName)
-        {
-            var monitor = _monitorPresentation.GetByModelName(modelName);
-
-            return View(monitor);
         }
 
         [HttpPost]
@@ -81,11 +60,6 @@ namespace E_WaveStore.Controllers
 
             _monitorPresentation.GetAddNewOrEditMonitorAsync(model);
             return RedirectToAction("MonitorList");
-        }
-
-        public JsonResult RemoveMonitor(string modelName)
-        {
-            return Json(_monitorPresentation.Remove(modelName));
         }
     }
 }

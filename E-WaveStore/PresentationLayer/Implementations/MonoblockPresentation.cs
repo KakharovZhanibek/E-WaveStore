@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace E_WaveStore.PresentationLayer.Implementations
 {
-    public class MonoblockPresentation : ProductPresentation<MonoBlockVM>, IMonoblockPresentation
+    public class MonoblockPresentation : IMonoblockPresentation
     {
         private readonly IProductRepository _productRepository;
         private readonly IMapper _mapper;
-        public MonoblockPresentation(IProductRepository productRepository, IMapper mapper) : base(productRepository, mapper)
+        public MonoblockPresentation(IProductRepository productRepository, IMapper mapper)
         {
             _productRepository = productRepository;
             _mapper = mapper;

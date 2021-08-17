@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace E_WaveStore.PresentationLayer.Interfaces
 {
-    public interface IMousePresentation : IProductPresentation<MouseVM>
+    public interface IMousePresentation
     {
         void GetAddNewOrEditMouseAsync(MouseVM model);
     }

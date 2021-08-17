@@ -33,6 +33,7 @@ namespace E_WaveStore.Controllers
             if (ModelState.IsValid)
             {                
                 User user = new User { Email = model.Email, UserName = model.Username };
+              
                 // добавляем пользователя
                 var result = await _userManager.CreateAsync(user, model.Password);
                 await _userManager.AddToRoleAsync(user, "user");

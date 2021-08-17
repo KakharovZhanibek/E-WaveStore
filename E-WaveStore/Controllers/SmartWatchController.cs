@@ -23,19 +23,6 @@ namespace E_WaveStore.Controllers
             _webHostEnvironment = webHostEnvironment;
             _categoryPresentation = categoryPresentation;
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        [HttpGet]
-        public IActionResult SmartWatchList(int page = 1)
-        {
-            var actionName = "SmartWatchList";
-            var viewModels = _smartWatchPresentation.GetList(CATEGORYNAME, actionName, page);
-
-            return View(viewModels);
-        }
 
         [HttpGet]
         public IActionResult AddNewSmartWatch()
@@ -49,14 +36,6 @@ namespace E_WaveStore.Controllers
             _smartWatchPresentation.GetAddNewOrEditSmartWatchAsync(model);
 
             return View("SmartWatchList");
-        }
-
-        [HttpGet]
-        public IActionResult EditSmartWatchData(string modelName)
-        {
-            var smartWatch = _smartWatchPresentation.GetByModelName(modelName);
-
-            return View(smartWatch);
         }
 
         [HttpPost]
@@ -81,11 +60,6 @@ namespace E_WaveStore.Controllers
 
             _smartWatchPresentation.GetAddNewOrEditSmartWatchAsync(model);
             return RedirectToAction("SmartWatchList");
-        }
-
-        public JsonResult RemoveSmartWatch(string modelName)
-        {
-            return Json(_smartWatchPresentation.Remove(modelName));
         }
     }
 }

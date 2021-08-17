@@ -1,0 +1,70 @@
+﻿
+@model OrderVM
+
+@{
+    ViewData["Title"] = "Order";
+    var product = ViewBag.Product;
+    var paymentTypeNames = ViewBag.PaymentTypeNames;
+}
+
+
+
+<div class="container" style="display:flex; padding:20px;">
+
+    <form action="/Product/Order" method="post" enctype="multipart/form-data">
+       
+        <div class="col-sm-10 offset-1" style="display:flex;">
+
+            <div style="display: flex; flex-direction:column; padding: 100px 0 100px 0; width:50%">
+
+                <div class="card">
+                    <img src=@(product.ImgUrl == null ? "" : $"{product.ImgUrl}") class="card-img-top">
+                </div>
+
+                <div style="padding-top: 80px;">
+                    <h2>@product.BrandName</h2>
+                    <h3> <b>@product.ModelName </b> </h3>
+                    <h3>@product.Price</h3>
+                </div>
+                <div>
+                    <p> @product.Specification </p>
+                </div>
+            </div>
+
+           @* 1) между инпутами сделать марджины
+            2) валидатор для номера телефона
+            3) калькулятор конечной суммы
+            4) при выборе карты форма для заполнения accountNumber/cvv
+            5) Quantity не может быть ниже 1 и больше чем макс кол-во товара*@
+
+            <div style="display: flex; flex-direction:column; padding: 100px 0 100px 0; width:50%">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    @Html.TextBoxFor(x => x.ApplicationUser.Email, new { @Value = Model.ApplicationUser.Email, placeholder = "Email", @readonly = true, Class = "form-control", })
+                }
+                else
+                {
+                    @Html.TextBoxFor(x => x.ApplicationUser.Username, new { placeholder = "Username", Class = "form-control", })
+                    @Html.TextBoxFor(x => x.ApplicationUser.Email, new { placeholder = "Email", Class = "form-control", })
+                }
+                @Html.TextBoxFor(x => x.ApplicationUser.PhoneNumber, new { placeholder = "PhoneNumber", Class = "form-control", })
+                @Html.TextBoxFor(x => x.Quantity, new { @Value = "1", placeholder = "Quantity", @type = "number", minValue = 1, maxValue = product.Amount, Class = "form-control", }) @* minValue, maxValue не работает*@
+                @Html.TextBoxFor(x => x.UnitPrice, new { @Value = product.Price, placeholder = product.Price, @readonly = true, Class = "form-control", })
+                <div style="display:flex; margin-top:20px;">
+                    @foreach (var name in paymentTypeNames)
+                    {
+                        @Html.RadioButton("searchBy", "iin") <text>@name</text>
+
+                    }
+                </div>
+
+                <div class="topMargin20 bottomMargin50">
+                    <input class="btn btn-success" type="submit" value="Order Now" />
+                </div>
+
+            </div>
+
+
+        </div>
+    </form>
+</div>

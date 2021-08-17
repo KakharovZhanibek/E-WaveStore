@@ -23,19 +23,6 @@ namespace E_WaveStore.Controllers
             _webHostEnvironment = webHostEnvironment;
             _categoryPresentation = categoryPresentation;
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        [HttpGet]
-        public IActionResult PhoneList(int page = 1)
-        {
-            var actionName = "PhoneList";
-            var viewModels = _phonePresentation.GetList(CATEGORYNAME, actionName, page);
-
-            return View(viewModels);
-        }
 
         [HttpGet]
         public IActionResult AddNewPhone()
@@ -49,14 +36,6 @@ namespace E_WaveStore.Controllers
             _phonePresentation.GetAddNewOrEditPhoneAsync(model);
 
             return View("PhoneList");
-        }
-
-        [HttpGet]
-        public IActionResult EditPhoneData(string modelName)
-        {
-            var phone = _phonePresentation.GetByModelName(modelName);
-
-            return View(phone);
         }
 
         [HttpPost]
@@ -81,11 +60,6 @@ namespace E_WaveStore.Controllers
 
             _phonePresentation.GetAddNewOrEditPhoneAsync(model);
             return RedirectToAction("PhoneList");
-        }
-
-        public JsonResult RemovePhone(string modelName)
-        {
-            return Json(_phonePresentation.Remove(modelName));
         }
     }
 }

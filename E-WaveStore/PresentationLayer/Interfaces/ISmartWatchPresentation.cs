@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace E_WaveStore.PresentationLayer.Interfaces
 {
-    public interface ISmartWatchPresentation : IProductPresentation<SmartWatchVM>
+    public interface ISmartWatchPresentation
     {
         void GetAddNewOrEditSmartWatchAsync(SmartWatchVM model);
     }

@@ -23,19 +23,6 @@ namespace E_WaveStore.Controllers
             _webHostEnvironment = webHostEnvironment;
             _categoryPresentation = categoryPresentation;
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        [HttpGet]
-        public IActionResult MouseList(int page = 1)
-        {
-            var actionName = "MouseList";
-            var viewModels = _mousePresentation.GetList(CATEGORYNAME, actionName, page);
-
-            return View("MouseList", viewModels);
-        }
 
         [HttpGet]
         public IActionResult AddNewMouse()
@@ -49,14 +36,6 @@ namespace E_WaveStore.Controllers
             _mousePresentation.GetAddNewOrEditMouseAsync(model);
 
             return View("MouseList");
-        }
-
-        [HttpGet]
-        public IActionResult EditMouseData(string modelName)
-        {
-            var mouse = _mousePresentation.GetByModelName(modelName);
-
-            return View(mouse);
         }
 
         [HttpPost]
@@ -81,11 +60,6 @@ namespace E_WaveStore.Controllers
 
             _mousePresentation.GetAddNewOrEditMouseAsync(model);
             return RedirectToAction("MouseList");
-        }
-
-        public JsonResult RemoveMouse(string modelName)
-        {
-            return Json(_mousePresentation.Remove(modelName));
         }
     }
 }

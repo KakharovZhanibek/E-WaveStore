@@ -14,8 +14,7 @@ namespace E_WaveStore.Models.ViewModels
         public decimal Price { get; set; }
         public int Amount { get; set; }
         public string ImgUrl { get; set; }
-        public IFormFile ImgFile { get; set; }
-       // public long SpecificationId { get; set; }
+        public IFormFile ImgFile { get; set; }       
         public CategoryVM Category { get; set; }
         public string Specification { get; set; }
     }

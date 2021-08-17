@@ -1,0 +1,62 @@
+﻿@model ReflectionIT.Mvc.Paging.PagingList<E_WaveStore.Models.CartVM>
+@using ReflectionIT.Mvc.Paging
+@addTagHelper *,ReflectionIT.Mvc.Paging
+
+@{
+    ViewData["Title"] = "AllProductInCart";
+}
+
+@*@section Scripts{
+        <script src="~/js/product.js"></script>
+    }*@
+
+
+<section class="pt-5 pb-5">
+    <div class="container" style="display:flex; flex-direction:row">     
+
+        <div class="container" style="display: flex; flex-direction: row; flex-wrap: wrap; width:100%;">
+
+            @if (Model != null)
+            {
+                @foreach (var item in Model)
+                {
+                    <div class="card deleteCard" style="width: 30%; padding: 20px;">
+                        <img class="img-fluid" alt="100%x280" src=@(item.Product.ImgUrl == null ? "/Images/ProductImages/noImage.png" : $"{item.Product.ImgUrl}")>
+                        <div class="card-body">
+                            <h4 class="card-title">@item.Product.BrandName</h4>
+                            <p class="card-text">@Html.ActionLink(@item.Product.ModelName, "ProductFullInfo", new { modelName = item.Product.ModelName })</p>
+                            <p class="card-text">@item.Product.Price</p>
+                        </div>
+
+                        <div style="display: flex; justify-content: space-between;">
+                            <button style="width: 120px; background-color: #004059;" class="btn" type="submit">
+                                @Html.ActionLink("- ", "RemoveProductFromCart", "Product", new { modelName = item.Product.ModelName }, new { @style = "color:#ffffff; font-size:x-large; text-decoration: none;" });
+                                <i style="color:white; font-size:x-large" class="fa fa-shopping-cart" aria-hidden="true"></i>
+                            </button>
+
+                            <button style="width: 120px; background-color: #004059;" class="btn" type="submit">
+                                @Html.ActionLink("+ ", "AddProductToCart", "Product", new { modelName = item.Product.ModelName }, new { @style = "color:#ffffff; font-size:x-large; text-decoration: none;" })
+                                <i style="color:white; font-size:x-large" class="fa fa-shopping-cart" aria-hidden="true"></i>
+                            </button>
+                        </div>
+
+                    </div>
+                }
+            }
+
+        </div>
+    </div>
+</section>
+
+
+
+
+<nav aria-label="nav example">
+    @if (this.Model != null)
+    {
+        @await this.Component.InvokeAsync("Pager", new { pagingList = this.Model })
+        //<vc:pager paging-list="@Model" />
+    }
+
+</nav>
+

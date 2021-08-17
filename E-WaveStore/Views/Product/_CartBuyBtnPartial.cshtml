@@ -1,0 +1,59 @@
+﻿
+@model E_WaveStore.Models.ViewModels.ProductVM
+
+
+@if (User.IsInRole("admin"))
+{
+    <div style="display: flex; justify-content: space-between;">
+        <button style="width: 120px; background-color: #f7d24c; /*#f6ba4d;*/ border-color: #ccc506;" class="btn editBtn edit" type="submit">
+            @Html.ActionLink("Edit", "EditProductData", "Product", new { modelName = Model.ModelName })
+        </button>
+        <input style="width:120px" class="btn btn-danger deleteProduct" data-name="@Model.ModelName" type="button" value="Delete" />
+    </div>
+}
+else if (User.IsInRole("user"))
+{
+    var test = ViewData["ProductsInCart"] as List<CartVM>; // много продуктов в корзине
+    @* var test2 = test.Exists(x => x.Product.Id == Model.Id)*@
+    <div style="display: flex; justify-content: space-between;">
+        @if (test.Count != 0)
+        {
+            @if (test.Exists(x => x.Product.Id == Model.Id))
+            {
+                <button style="width: 120px; background-color: #004059;" class="btn" type="submit">
+                    @Html.ActionLink("- ", "RemoveProductFromCart", "Product", new { modelName = Model.ModelName }, new { @style = "color:#ffffff; font-size:x-large; text-decoration: none;" });
+                    <i style="color:white; font-size:x-large" class="fa fa-shopping-cart" aria-hidden="true"></i>
+                </button>
+            }
+            else
+            {
+                <button style="width: 120px; background-color: #004059;" class="btn" type="submit">
+                    @Html.ActionLink("+ ", "AddProductToCart", "Product", new { modelName = Model.ModelName }, new { @style = "color:#ffffff; font-size:x-large; text-decoration: none;" })
+                    <i style="color:white; font-size:x-large" class="fa fa-shopping-cart" aria-hidden="true"></i>
+                </button>
+            }
+        }
+        else
+        {
+            <button style="width: 120px; background-color: #004059;" class="btn" type="submit">
+                @Html.ActionLink("+ ", "AddProductToCart", "Product", new { modelName = Model.ModelName }, new { @style = "color:#ffffff; font-size:x-large; text-decoration: none;" })
+                <i style="color:white; font-size:x-large" class="fa fa-shopping-cart" aria-hidden="true"></i>
+            </button>
+        }
+        <button style="width: 120px; background-color: #2B6684;" class="btn" type="submit">
+            @Html.ActionLink("Buy", "Order", "Product", new { modelName = Model.ModelName }, new { @style = "color:#ffffff; font-size:x-large; text-decoration: none;" })
+        </button>
+    </div>
+}
+else if (!User.Identity.IsAuthenticated)
+{
+    <div style="display: flex; justify-content: space-between;">
+        <button style="width: 120px; background-color: #004059;" class="btn" type="submit">
+            @Html.ActionLink("+ ", "Login", "Account", new { modelName = Model.ModelName }, new { @style = "color:#ffffff; font-size:x-large; text-decoration: none;" })
+            <i style="color:white; font-size:x-large" class="fa fa-shopping-cart" aria-hidden="true"></i>
+        </button>
+        <button style="width: 120px; background-color: #2B6684;" class="btn" type="submit">
+            @Html.ActionLink("Buy", "Order", "Product", new { modelName = Model.ModelName }, new { @style = "color:#ffffff; font-size:x-large; text-decoration: none;" })
+        </button>
+    </div>
+}

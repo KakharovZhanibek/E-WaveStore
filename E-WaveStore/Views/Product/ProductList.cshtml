@@ -11,59 +11,111 @@
 }
 
 
+
 <div class="container" style="display:flex; padding:20px;">
-    <div>
-        <form asp-action="StudentListAndSearch" method="get">
-            <!--<p>
-                <b> Search By: </b>-->
-                @*потом сделать поиск по BrandName and ModelName *@
 
-            <!--</p>
-            <br />-->
-            <p>
-                <input type="search"
-                       placeholder="Search By Brand Name..."
-                       name="searchStudent"
-                       class="width400" />
-                <input type="submit" value="Search" class="btn btn-primary leftMargin15" />
+    <div style="display:flex; flex-direction:row;">
+        <form style="display:flex;" asp-action="ProductSearchModelName" method="get">
+            <input type="hidden" name="categoryName" value="@ViewBag.CategoryName" />
+            <input type="search"
+                   placeholder="Search By Model Name..."
+                   name="searchbyModelName"
+                   class="width400 form-control" />
 
-                <a class="btn btn-primary leftMargin15" asp-action="ProductList">Get All</a>
-                @*<a class="btn btn-primary leftMargin15" asp-controller="Keyboard" asp-action="AddNewKeyboard">Add New Keyboard</a>*@
+            <input type="submit" value="Search" class="btn btn-primary leftMargin15" style="width:100px;" />
+        </form>
 
+        <form style="display:flex;" asp-action="ProductList" method="get">
 
-            </p>
+            <a class="btn btn-primary leftMargin15" style="width:100px;" asp-action="ProductList" asp-controller="Product" asp-route-categoryName="@ViewBag.CategoryName">Get All</a>
+
+            <div class="dropdown">
+                <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    Сортировка по цене
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li>
+                        <a class="dropdown-item nav-link text-dark" asp-controller="Product" asp-action="ProductList" asp-route-categoryName="">по возрастанию</a>
+                        @* Нужно передать категорию, на данный момент просто выводит все продукты, не сортирует*@
+                    </li>
+                    <li>
+                        <a class="dropdown-item nav-link text-dark" asp-controller="Product" asp-action="ProductList" asp-route-categoryName="Laptops">по убыванию</a>
+                    </li>
+
+                </ul>
+            </div>
+
+            @*<a class="btn btn-primary leftMargin15" asp-controller="Keyboard" asp-action="AddNewKeyboard">Add New Keyboard</a>*@
+
         </form>
     </div>
+
 </div>
 
 <section class="pt-5 pb-5">
-    <div class="container" style="display: flex; flex-direction: row; flex-wrap: wrap;">
+    <div class="container" style="display:flex; flex-direction:row">
+        <div class="container" style="display:flex; flex-direction: column; width:20%;">
+            @*<form asp-action="FilterProductbyPriceAndBrandName" method="get">*@
+            <div style="display: flex; flex-direction: column; border: solid; border-width:1px; padding: 10px;
+">
 
-        @if (Model != null)
-        {
-            @foreach (var item in Model)
-            {
-                <div class="card deleteCard" style="width: 30%; padding: 20px;">
-                    <img class="img-fluid" alt="100%x280" src=@(item.ImgUrl == null ? "/Images/ProductImages/noImage.png" : $"{item.ImgUrl}")>
-                    <div class="card-body">
-                        <h4 class="card-title">@item.BrandName</h4>
-                        <p class="card-text">@Html.ActionLink(@item.ModelName, "ProductFullInfo", new { keyboardModelName = item.ModelName })</p>
-                        <p class="card-text">@item.Price</p>
+                <h4>Brand Name</h4>
+
+                @foreach (var brandName in ViewBag.BrandNames as List<string>)
+                {
+                    <div>
+                        <input class="inputClass" type="checkbox" value="@brandName" id="@brandName" />
+                        <label id="labelId" for="@brandName">@brandName</label>
                     </div>
-                    @if (User.IsInRole("admin"))
+
+                }
+
+
+            </div>
+            <div style="margin-top:10px; display: flex; flex-direction: column; border: solid; border-width:1px; padding: 10px;">
+
+                <h4>Price</h4>
+                from: <input id="minPrice" data-name="minPrice" type="number" min="0" />
+                to: <input id="maxPrice" data-name="maxPrice" type="number" min="1" />
+                <input id="categoryName" type="hidden" data-name="@ViewBag.CategoryName" />
+
+            </div>
+
+            <div>
+                <input id="getCheckedValues" type="submit" value="Apply" class="btn btn-success" style="margin-top: 15px; width: 155px;" />
+
+                @*<button onclick="getCheckedCheckBoxes()"> Кто выбран? </button>*@
+
+                @*<a class="btn btn-success leftMargin15" asp-action="ProductList">Apply</a>*@
+            </div>
+            @*</form>*@
+
+        </div>
+
+        <div class="container" style="display: flex; flex-direction: row; flex-wrap: wrap; width:80%;">
+
+            @if (Model != null)
+            {
+                @foreach (var item in Model)
+                {
+                    @if (item.Amount > 0)
                     {
-                        <div style="display: flex; justify-content: space-between;">
-                            <button style="width: 120px; background-color: #f7d24c; /*#f6ba4d;*/ border-color: #ccc506;" class="btn editBtn edit" type="submit">
-                                @Html.ActionLink("Edit", "EditProductData", "Product", new { modelName = item.ModelName })
-                            </button>
-                            <input style="width:120px" class="btn btn-danger deleteProduct" data-name="@item.ModelName" type="button" value="Delete" />
+                        <div class="card deleteCard" style="width: 30%; padding: 20px;">
+                            <img class="img-fluid" alt="100%x280" src=@(item.ImgUrl == null ? "/Images/ProductImages/noImage.png" : $"{item.ImgUrl}")>
+                            <div class="card-body">
+                                <h4 class="card-title">@item.BrandName</h4>
+                                <p class="card-text">@Html.ActionLink(@item.ModelName, "ProductFullInfo", new { modelName = item.ModelName })</p>
+                                <p class="card-text">@item.Price</p>
+                            </div>
+
+                            @await Html.PartialAsync("_CartBuyBtnPartial", item, new ViewDataDictionary(new Microsoft.AspNetCore.Mvc.ModelBinding.EmptyModelMetadataProvider(),
+                                                                                                    new Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary()) { { "ProductsInCart", ViewBag.ProductsInCart } })
                         </div>
                     }
-
-                </div>
+                }
             }
-        }
 
+        </div>
     </div>
 </section>
 
@@ -78,3 +130,52 @@
     }
 
 </nav>
+
+
+@* @if (User.IsInRole("admin"))
+    {
+        <div style="display: flex; justify-content: space-between;">
+            <button style="width: 120px; background-color: #f7d24c; /*#f6ba4d;*/ border-color: #ccc506;" class="btn editBtn edit" type="submit">
+                @Html.ActionLink("Edit", "EditProductData", "Product", new { modelName = item.ModelName })
+            </button>
+            <input style="width:120px" class="btn btn-danger deleteProduct" data-name="@item.ModelName" type="button" value="Delete" />
+        </div>
+    }
+    else if (User.IsInRole("user"))
+    {
+        <div style="display: flex; justify-content: space-between;">
+            @if (ViewBag.ProductsInCart != null)
+            {
+                @foreach (var product in ViewBag.ProductsInCart as List<CartVM>)
+                {
+                    @if (product.Product.Id == item.Id)
+                    {
+                        <button style="width: 120px; background-color: #004059;" class="btn" type="submit">
+                            @Html.ActionLink("Remove", "", "Product", new { modelName = item.ModelName }, new { @style = "color:#ffffff;" })
+                        </button>
+                    }
+                    else
+                    {
+                        <button style="width: 120px; background-color: #004059;" class="btn" type="submit">
+                            @Html.ActionLink("Add To Cart", "AddProductToCart", "Product", new { modelName = item.ModelName }, new { @style = "color:#ffffff;" })
+                        </button>
+                    }
+
+                }
+            }
+            <button style="width: 120px; background-color: #2B6684;" class="btn" type="submit">
+                @Html.ActionLink("Buy", "", "Product", new { modelName = item.ModelName }, new { @style = "color:#ffffff;" })
+            </button>
+        </div>
+    }
+    else if (!User.Identity.IsAuthenticated)
+    {
+        <div style="display: flex; justify-content: space-between;">
+            <button style="width: 120px;" class="btn btn-primary" type="submit">
+                @Html.ActionLink("Add To Cart", "Login", "Account", new { modelName = item.ModelName }, new { @style = "color:#000000;" })
+            </button>
+            <button style="width: 120px;" class="btn btn-success" type="submit">
+                @Html.ActionLink("Buy", "", "Product", new { modelName = item.ModelName }, new { @style = "color:#000000;" })
+            </button>
+        </div>
+    }*@

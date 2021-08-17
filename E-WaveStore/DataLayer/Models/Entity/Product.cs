@@ -17,10 +17,7 @@ namespace E_WaveStore.DataLayer.Models.Entity
         public decimal Price { get; set; }
         public int Amount { get; set; }
         public string ImgUrl { get; set; }
-        //public long SpecificationId { get; set; }
         public string Specification { get; set; }
         public virtual Category Category { get; set; }
-       // public Specification Specification { get; set; }
-      
     }
 }

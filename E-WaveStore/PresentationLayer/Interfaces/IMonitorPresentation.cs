@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace E_WaveStore.PresentationLayer.Interfaces
 {
-    public interface IMonitorPresentation : IProductPresentation<MonitorVM>
+    public interface IMonitorPresentation
     {
         void GetAddNewOrEditMonitorAsync(MonitorVM model);
     }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace E_WaveStore.PresentationLayer.Interfaces
 {
-    public interface IPhonePresentation : IProductPresentation<PhoneVm>
+    public interface IPhonePresentation
     {
         void GetAddNewOrEditPhoneAsync(PhoneVm model);
     }

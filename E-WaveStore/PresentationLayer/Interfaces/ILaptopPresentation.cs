@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace E_WaveStore.PresentationLayer.Interfaces
 {
-    public interface ILaptopPresentation : IProductPresentation<LaptopVM>
+    public interface ILaptopPresentation
     {
         void GetAddNewOrEditLaptopAsync(LaptopVM model);
     }

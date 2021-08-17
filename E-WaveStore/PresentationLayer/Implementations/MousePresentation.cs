@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace E_WaveStore.PresentationLayer.Implementations
 {
-    public class MousePresentation : ProductPresentation<MouseVM>, IMousePresentation
+    public class MousePresentation : IMousePresentation
     {
         private readonly IProductRepository _productRepository;
         private readonly IMapper _mapper;
-        public MousePresentation(IProductRepository productRepository, IMapper mapper) : base(productRepository, mapper)
+        public MousePresentation(IProductRepository productRepository, IMapper mapper)
         {
             _productRepository = productRepository;
             _mapper = mapper;

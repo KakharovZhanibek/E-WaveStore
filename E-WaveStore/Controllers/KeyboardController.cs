@@ -25,19 +25,6 @@ namespace E_WaveStore.Controllers
             _webHostEnvironment = webHostEnvironment;
             _categoryPresentation = categoryPresentation;
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        [HttpGet]
-        public IActionResult KeyboardList(int page = 1)
-        {
-            var actionName = "KeyboardList";
-            var viewModels = _keyboardPersentation.GetList(CATEGORYNAME, actionName, page);
-
-            return View("KeyboardList", viewModels);
-        }
 
         [HttpGet]
         public IActionResult AddNewKeyboard()
@@ -51,14 +38,6 @@ namespace E_WaveStore.Controllers
             _keyboardPersentation.GetAddNewOrEditKeyboardAsync(model);
 
             return View("KeyboardList");
-        }
-
-        [HttpGet]
-        public IActionResult EditKeyboardData(string modelName)
-        {
-            var keyboard = _keyboardPersentation.GetByModelName(modelName);
-
-            return View(keyboard);
         }
 
         [HttpPost]
@@ -83,11 +62,6 @@ namespace E_WaveStore.Controllers
 
             _keyboardPersentation.GetAddNewOrEditKeyboardAsync(model);
             return RedirectToAction("KeyboardList");
-        }
-
-        public JsonResult RemoveKeyboard(string modelName)
-        {
-            return Json(_keyboardPersentation.Remove(modelName));
         }
     }
 }

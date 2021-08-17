@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace E_WaveStore.PresentationLayer.Interfaces
 {
-    public interface ITvPresentation : IProductPresentation<TvVM>
+    public interface ITvPresentation
     {
         void GetAddNewOrEditTvAsync(TvVM model);
     }
