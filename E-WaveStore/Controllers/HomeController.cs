@@ -9,10 +9,8 @@ using E_WaveStore.Models;
 using Microsoft.AspNetCore.Authorization;
 using E_WaveStore.Services;
 using Microsoft.AspNetCore.Identity;
-using E_WaveStore.DataLayer.Models;
-using E_WaveStore.DataLayer.Repositories.Interfaces;
-using E_WaveStore.DataLayer;
 using Microsoft.Extensions.Hosting;
+using DataLayer;
 
 namespace E_WaveStore.Controllers
 {
@@ -27,20 +25,24 @@ namespace E_WaveStore.Controllers
             _host = host;
         }
 
+        [ResponseCache(CacheProfileName = "Caching")]
         public async Task<IActionResult> IndexAsync()
         {
             await SeedExtention.SeedAsync(_host);
-            _logger.LogInformation("Test Log Message");
+            _logger.LogInformation("You requested the Home Page.");
+            try
+            {
+                throw new Exception("This is our Exception.");
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex,"we caught this exception in the IndexAsync call." );
+            }
             return View();
         }
 
-        [Authorize(Roles = "admin")]
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        /*[ResponseCache(CacheProfileName = "NoCaching")]*/
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

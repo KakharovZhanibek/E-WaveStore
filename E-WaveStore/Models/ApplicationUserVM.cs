@@ -13,6 +13,7 @@ namespace E_WaveStore.Models
         public string Username { get; set; }
         [Required]
         [Display(Name = "Email")]
+        [EmailAddress]
         public string Email { get; set; }
 
         [Required]        

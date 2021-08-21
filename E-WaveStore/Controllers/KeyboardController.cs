@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using E_WaveStore.DataLayer;
 using E_WaveStore.Models;
 using E_WaveStore.PresentationLayer.Interfaces;
 using Microsoft.AspNetCore.Hosting;

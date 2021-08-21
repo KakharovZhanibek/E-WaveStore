@@ -5,20 +5,18 @@ using System.Reflection;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.Configuration;
-using E_WaveStore.DataLayer;
-using E_WaveStore.DataLayer.Entity;
-using E_WaveStore.DataLayer.Models;
-using E_WaveStore.DataLayer.Models.Entity;
-using E_WaveStore.DataLayer.Repositories.Implementations;
-using E_WaveStore.DataLayer.Repositories.Interfaces;
+using DataLayer;
+using DataLayer.Entities;
+using DataLayer.Repositories.Implementations;
+using DataLayer.Repositories.Interfaces;
 using E_WaveStore.Models;
 using E_WaveStore.Models.ViewModels;
 using E_WaveStore.PresentationLayer.Implementations;
 using E_WaveStore.PresentationLayer.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -39,12 +37,26 @@ namespace E_WaveStore
 
         public void ConfigureServices(IServiceCollection services)
         {            
-            services.AddControllersWithViews().AddNewtonsoftJson();
+            /*services.AddControllersWithViews().AddNewtonsoftJson();*/
+            services.AddControllersWithViews(options =>
+            {
+                options.CacheProfiles.Add("Caching",
+                    new CacheProfile()
+                    {
+                        Duration = 300
+                    });
+                options.CacheProfiles.Add("NoCaching",
+                    new CacheProfile()
+                    {
+                        Location = ResponseCacheLocation.None,
+                        NoStore = true
+                    });
+            }).AddNewtonsoftJson();
 
             services.AddRazorPages()
                  .AddRazorRuntimeCompilation();
             services.AddDbContext<ApplicationContext>(options =>
-                        options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")),
+                        options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), x => x.MigrationsAssembly("E-WaveStore")),
              ServiceLifetime.Transient);
 
             services.AddIdentity<User, IdentityRole>(opts =>
@@ -60,18 +72,19 @@ namespace E_WaveStore
 
 
             RegisterRepositories(services);
+            
             services.AddScoped<ICategoryPresentation, CategoryPresentation>();
             services.AddScoped<IProductPresentation, ProductPresentation>();
             services.AddScoped<ICartPresentation, CartPresentation>();
             services.AddScoped<IOrderPresentation, OrderPresentation>();
             //services.AddScoped<IPaymentTypePresentation, PaymentTypePresentation>();
 
-            services.AddScoped<IKeyboardPresentation, KeyboardPresentation>();                       
-            services.AddScoped<ILaptopPresentation, LaptopPresentation>();
-            services.AddScoped<IMonitorPresentation, MonitorPresentation>();
-            services.AddScoped<IMonoblockPresentation, MonoblockPresentation>();
-            services.AddScoped<IMousePresentation, MousePresentation>();
-            
+            /*  services.AddScoped<IKeyboardPresentation, KeyboardPresentation>();                       
+              services.AddScoped<ILaptopPresentation, LaptopPresentation>();
+              services.AddScoped<IMonitorPresentation, MonitorPresentation>();
+              services.AddScoped<IMonoblockPresentation, MonoblockPresentation>();
+              services.AddScoped<IMousePresentation, MousePresentation>();*/
+
             /* services.AddScoped<IPhonePresentation, PhonePresentation>();
              services.AddScoped<ISmartWatchPresentation, SmartWatchPresentation>();
              services.AddScoped<ITvPresentation, TvPresentation>();*/
@@ -92,11 +105,17 @@ namespace E_WaveStore
         }
         private void RegisterRepositories(IServiceCollection services)
         {
+            /* IEnumerable<Type> implementationsType = Assembly
+                 .GetExecutingAssembly()
+                 .GetTypes()
+                 .Where(type =>
+                         !type.IsInterface && type.GetInterface(typeof(IBaseRepository<>).Name) != null);*/
+
             IEnumerable<Type> implementationsType = Assembly
-                .GetExecutingAssembly()
-                .GetTypes()
-                .Where(type =>
-                        !type.IsInterface && type.GetInterface(typeof(IBaseRepository<>).Name) != null);
+               .Load("DataLayer")
+               .GetTypes()
+               .Where(type =>
+                       !type.IsInterface && type.GetInterface(typeof(IBaseRepository<>).Name) != null);
 
             foreach (Type implementationType in implementationsType)
             {
@@ -106,7 +125,7 @@ namespace E_WaveStore
 
                 foreach (Type serviceType in servicesType)
                 {
-                    services.AddScoped(serviceType, implementationType);
+                    services.AddScoped(serviceType, implementationType);                    
                 }
             }
         }
@@ -162,6 +181,13 @@ namespace E_WaveStore
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                OnPrepareResponse = ctx =>
+                {
+                    ctx.Context.Response.Headers.Add("Cache-Control", "public,max-age=600");
+                }
+            });
 
             app.UseRouting();
 

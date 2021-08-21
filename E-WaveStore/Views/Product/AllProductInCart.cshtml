@@ -12,7 +12,7 @@
 
 
 <section class="pt-5 pb-5">
-    <div class="container" style="display:flex; flex-direction:row">     
+    <div class="container" style="display:flex; flex-direction:row">
 
         <div class="container" style="display: flex; flex-direction: row; flex-wrap: wrap; width:100%;">
 
@@ -33,15 +33,20 @@
                                 @Html.ActionLink("- ", "RemoveProductFromCart", "Product", new { modelName = item.Product.ModelName }, new { @style = "color:#ffffff; font-size:x-large; text-decoration: none;" });
                                 <i style="color:white; font-size:x-large" class="fa fa-shopping-cart" aria-hidden="true"></i>
                             </button>
-
-                            <button style="width: 120px; background-color: #004059;" class="btn" type="submit">
-                                @Html.ActionLink("+ ", "AddProductToCart", "Product", new { modelName = item.Product.ModelName }, new { @style = "color:#ffffff; font-size:x-large; text-decoration: none;" })
-                                <i style="color:white; font-size:x-large" class="fa fa-shopping-cart" aria-hidden="true"></i>
+                            <button style="width: 120px; background-color: #2B6684;" class="btn" type="submit">
+                                @Html.ActionLink("Buy", "Order", "Product", new { modelName = item.Product.ModelName }, new { @style = "color:#ffffff; font-size:x-large; text-decoration: none;" })
                             </button>
                         </div>
 
                     </div>
                 }
+
+            }
+            else
+            {
+                <div class="container" style="height:700px;">
+                    <h2>Sorry. You dont have any item in your cart:(</h2>
+                </div>
             }
 
         </div>

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using E_WaveStore.DataLayer.Models.Entity;
-using E_WaveStore.DataLayer.Repositories.Interfaces;
+using DataLayer.Entities;
+using DataLayer.Repositories.Interfaces;
 using E_WaveStore.Models.ViewModels;
 using E_WaveStore.PresentationLayer.Interfaces;
 using Microsoft.AspNetCore.Routing;
@@ -38,7 +38,7 @@ namespace E_WaveStore.PresentationLayer.Implementations
             products.RouteValue = new RouteValueDictionary { { "categoryName", category } };
 
             //products.Action = actionName;
-            products.Action = "Product";
+            products.Action = "ProductList";
             return products;
         }
 

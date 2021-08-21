@@ -1,6 +1,4 @@
-﻿using E_WaveStore.DataLayer.Models;
-using E_WaveStore.DataLayer.Models.Entity;
-using E_WaveStore.DataLayer.Repositories.Interfaces;
+﻿using DataLayer.Entities;
 using E_WaveStore.Models;
 using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;

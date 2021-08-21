@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using E_WaveStore.DataLayer.Models.Entity;
-using E_WaveStore.DataLayer.Repositories.Interfaces;
+using DataLayer.Entities;
+using DataLayer.Repositories.Interfaces;
 using E_WaveStore.Models;
 using E_WaveStore.PresentationLayer.Interfaces;
 using ReflectionIT.Mvc.Paging;

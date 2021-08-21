@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using E_WaveStore.Models;
 using E_WaveStore.Models.ViewModels;
 using E_WaveStore.PresentationLayer.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -20,11 +21,10 @@ namespace E_WaveStore.Controllers
         private IOrderPresentation _orderPresentation;
         private ICategoryPresentation _categoryPresentation;
         private IWebHostEnvironment _webHostEnvironment;
-        private ICartPresentation _cartPresentation;
-        //private const string CATEGORYNAME = "Keyboards";
+        private ICartPresentation _cartPresentation;        
         private readonly ILogger _logger;
-        public ProductController(IProductPresentation productPresentation, IWebHostEnvironment webHostEnvironment, 
-            ICategoryPresentation categoryPresentation, ICartPresentation cartPresentation, 
+        public ProductController(IProductPresentation productPresentation, IWebHostEnvironment webHostEnvironment,
+            ICategoryPresentation categoryPresentation, ICartPresentation cartPresentation,
             IOrderPresentation orderPresentation, ILogger<ProductController> logger)
         {
 
@@ -42,6 +42,7 @@ namespace E_WaveStore.Controllers
         }
 
         [HttpGet]
+        //[ResponseCache(CacheProfileName = "Caching")]
         public IActionResult ProductList(string categoryName, int page = 1)
         {
             var actionName = "ProductList";
@@ -53,10 +54,12 @@ namespace E_WaveStore.Controllers
             try
             {
                 ViewBag.ProductsInCart = _cartPresentation.GetAllProductInCart(User.Identity.Name);
+                _logger.LogInformation("success");
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                //Console.WriteLine(ex.Message);
+                _logger.LogInformation("error {err}", ex);
             }
 
             return View(viewModels);
@@ -74,8 +77,7 @@ namespace E_WaveStore.Controllers
             ViewBag.BrandNames = _productPresentation.GetAllBrandNames(categoryName);
             ViewBag.CategoryName = categoryName;
 
-            return View("ProductList", viewModels);
-            //return Redirect("https://localhost:5001/Product/ProductList?categoryName=Laptops");
+            return View("ProductList", viewModels);            
         }
 
         [HttpGet]
@@ -85,12 +87,14 @@ namespace E_WaveStore.Controllers
             var viewModels = _productPresentation.GetProductSearchModelName(searchbyModelName, actionName, page);
             ViewBag.BrandNames = _productPresentation.GetAllBrandNames(categoryName);
             ViewBag.CategoryName = categoryName;
+            ViewBag.ProductsInCart = _cartPresentation.GetAllProductInCart(User.Identity.Name);
 
             return View("ProductList", viewModels);
         }
 
 
         [HttpGet]
+        [Authorize(Roles ="admin, manager")]
         public IActionResult EditProductData(string modelName)
         {
             var keyboard = _productPresentation.GetByModelName(modelName);
@@ -102,6 +106,8 @@ namespace E_WaveStore.Controllers
         public IActionResult ProductFullInfo(string modelName)
         {
             var product = _productPresentation.GetByModelName(modelName);
+            var specificationAsStrList = product.Specification.Split(", ");
+            ViewBag.SpecificationAsStrList = specificationAsStrList;
             ViewBag.ProductsInCart = _cartPresentation.GetAllProductInCart(User.Identity.Name);
             return View(product);
 
@@ -129,12 +135,14 @@ namespace E_WaveStore.Controllers
             return RedirectToAction("ProductList");
         }
 
+        [Authorize(Roles = "admin")]
         public JsonResult RemoveProduct(string modelName)
         {
             return Json(true);
             //return Json(_productPresentation.Remove(modelName));
         }
 
+        [Authorize(Roles = "user")]
         public IActionResult AddProductToCart(string modelName)
         {
             var productVM = _productPresentation.GetByModelName(modelName);
@@ -146,21 +154,24 @@ namespace E_WaveStore.Controllers
             return View("ProductList");
         }
 
+        [Authorize(Roles = "user")]
         public IActionResult AllProductInCart()
         {
             var allProductsInCart = _cartPresentation.GetAllProductInCart(User.Identity.Name);
             return View(allProductsInCart);
         }
 
+        [Authorize(Roles = "user")]
         public IActionResult RemoveProductFromCart(string modelName)
         {
             var allProductsInCart = _cartPresentation.GetAllProductInCart(User.Identity.Name);
             var productInCart = allProductsInCart.FirstOrDefault(x => x.Product.ModelName == modelName);
             _cartPresentation.RemoveProductFromCart(productInCart.Id);
-            return View(allProductsInCart);
+            return View("AllProductInCart");
         }
 
         [HttpGet]
+        [Authorize(Roles = "user")]
         public IActionResult Order(string modelName)
         {
             var product = _productPresentation.GetByModelName(modelName);
