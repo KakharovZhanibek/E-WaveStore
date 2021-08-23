@@ -22,6 +22,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Serilog;
 
 namespace E_WaveStore
 {
@@ -181,6 +182,9 @@ namespace E_WaveStore
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            app.UseSerilogRequestLogging();
+
             app.UseStaticFiles(new StaticFileOptions()
             {
                 OnPrepareResponse = ctx =>

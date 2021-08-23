@@ -22,7 +22,6 @@ namespace DataLayer
                 await CreateDefaultAdminAsync(scope.ServiceProvider);
                 CreateDefaultCategory(scope.ServiceProvider);
                 CreateDefaultProduct(scope.ServiceProvider);
-
             }
 
             return host;
@@ -38,7 +37,6 @@ namespace DataLayer
                 await _roleManager.CreateAsync(new IdentityRole("user"));
             }
         }
-
         public static async Task CreateDefaultAdminAsync(IServiceProvider serviceProvider)
         {
             UserManager<User> _userManager = serviceProvider.GetService<UserManager<User>>();
@@ -50,10 +48,8 @@ namespace DataLayer
                 await _userManager.AddToRoleAsync(user, "admin");
             }
         }
-
         public static void CreateDefaultProduct(IServiceProvider serviceProvider)
         {
-
             var productRepository = serviceProvider.GetService<IProductRepository>();
             var categoryRepository = serviceProvider.GetService<ICategoryRepository>();
 
@@ -63,7 +59,6 @@ namespace DataLayer
 
             if (!products)
             {
-
                 Product productKeyboard_1 = new Product
                 {
                     BrandName = "A4tech",
@@ -75,6 +70,7 @@ namespace DataLayer
                     Specification = "KeysAmount = 112, ConnectionType = Wired, Layout = qwerty, Dimension = 44.2 x 4.9 x 13.2, " +
                                     "KeyType = mechanical, Color = Black, BackLight = RGB"
                 };
+                productKeyboard_1.Specification = productKeyboard_1.Specification.Replace("=", ":");
 
                 Product productKeyboard_2 = new Product
                 {
@@ -87,6 +83,7 @@ namespace DataLayer
                     Specification = "KeysAmount = 112, ConnectionType = Wireless, Layout = qwerty, Dimension = 44.4 x 3.7 x 13.2, " +
                                     "KeyType = mechanical, Color = Black, BackLight = RGB"
                 };
+                productKeyboard_2.Specification = productKeyboard_2.Specification.Replace("=", ":");
 
                 Product productKeyboard_3 = new Product
                 {
@@ -99,6 +96,7 @@ namespace DataLayer
                     Specification = "KeysAmount = 112, ConnectionType = Wireless, Layout = qwerty, Dimension = 44.4 x 3.7 x 13.2, " +
                                     "KeyType = optic-mechanical, Color = Black, BackLight = Red"
                 };
+                productKeyboard_3.Specification = productKeyboard_3.Specification.Replace("=", ":");
 
                 Product productKeyboard_4 = new Product
                 {
@@ -111,6 +109,7 @@ namespace DataLayer
                     Specification = "KeysAmount = 117, ConnectionType = Wireless, Layout = qwerty, Dimension = 37.3 x 2.1 x 14.4, " +
                                     "KeyType = membrane, Color = Black, BackLight = Blue"
                 };
+                productKeyboard_4.Specification = productKeyboard_4.Specification.Replace("=", ":");
 
                 Product productKeyboard_5 = new Product
                 {
@@ -123,6 +122,7 @@ namespace DataLayer
                     Specification = "KeysAmount = 107, ConnectionType = Wired, Layout = qwerty, Dimension = 46.3 x 15.6 x 4.2, " +
                                     "KeyType = membrane, Color = Black, BackLight = RGB"
                 };
+                productKeyboard_5.Specification = productKeyboard_5.Specification.Replace("=", ":");
 
                 Product productKeyboard_6 = new Product
                 {
@@ -135,6 +135,7 @@ namespace DataLayer
                     Specification = "KeysAmount = 104, ConnectionType = Wired, Layout = qwerty, Dimension = 36.4 x 15.4 x 3, " +
                                     "KeyType = mechanical, Color = Black, BackLight = Blue"
                 };
+                productKeyboard_6.Specification = productKeyboard_6.Specification.Replace("=", ":");
 
                 Product productKeyboard_7 = new Product
                 {
@@ -147,6 +148,7 @@ namespace DataLayer
                     Specification = "KeysAmount = 109, ConnectionType = Wired, Layout = qwerty, Dimension = 43.4 x 13.4 x 3.7, " +
                                     "KeyType = mechanical, Color = Black, BackLight = Blue"
                 };
+                productKeyboard_7.Specification = productKeyboard_7.Specification.Replace("=", ":");
 
                 productRepository.Save(productKeyboard_1);
                 productRepository.Save(productKeyboard_2);
@@ -169,6 +171,7 @@ namespace DataLayer
                     Specification = "Operational System = Windows 10 Pro, Cpu = Intel celeron, Ram = 4, Core Amount = 2, " +
                     "Ssd = 120 Gb, Hdd = No, DisplayDiagonal = 17.4f, DisplayResolution = 1920x1080, Color = Black, Weight = 3 kg"
                 };
+                productLaptop_1.Specification = productLaptop_1.Specification.Replace("=", ":");
 
                 Product productLaptop_2 = new Product
                 {
@@ -181,6 +184,7 @@ namespace DataLayer
                     Specification = "Operational System = Windows 10 Home, Cpu = Intel celeron, Ram = 4, Core Amount = 2," +
                    "Ssd = No, Hdd = 1 Tb, DisplayDiagonal = 17.4f, DisplayResolution = 1920x1080, Color = Black, Weight = 3 kg"
                 };
+                productLaptop_2.Specification = productLaptop_2.Specification.Replace("=", ":");
 
                 Product productLaptop_3 = new Product
                 {
@@ -193,6 +197,7 @@ namespace DataLayer
                     Specification = "Operational System = Windows 10 Enterprice, Cpu = AMD E-series, Ram = 4, Core Amount = 2, " +
                    "Ssd = No, Hdd = 1Tb, DisplayDiagonal = 17.4f, DisplayResolution = 1920x1080, Color = Black, Weight = 3kg"
                 };
+                productLaptop_3.Specification = productLaptop_3.Specification.Replace("=", ":");
 
                 Product productLaptop_4 = new Product
                 {
@@ -205,6 +210,7 @@ namespace DataLayer
                     Specification = "Operational System = Windows 10 Pro, Cpu = Intel i3, Ram = 4, Core Amount = 2, " +
                    "Ssd = No, Hdd = 1 Tb, DisplayDiagonal = 17.4f, DisplayResolution = 1920x1080, Color = Black, Weight = 3 kg"
                 };
+                productLaptop_4.Specification = productLaptop_4.Specification.Replace("=", ":");
 
                 Product productLaptop_5 = new Product
                 {
@@ -217,6 +223,7 @@ namespace DataLayer
                     Specification = "Operational System = Windows 10 Pro, Cpu = AMD Ryzen 7,  Ram = 16, Core Amount = 8, " +
                    "Ssd = 1 Tb, Hdd = No, DisplayDiagonal = 17.4f, DisplayResolution = 1920x1080, Color = Black, Weight = 3 kg"
                 };
+                productLaptop_5.Specification = productLaptop_5.Specification.Replace("=", ":");
 
                 Product productLaptop_6 = new Product
                 {
@@ -229,6 +236,7 @@ namespace DataLayer
                     Specification = "Operational System = Windows 10 Pro, Cpu = Intel core i5, Ram = 8, Core Amount = 4, " +
                   "Ssd = 512 Gb, Hdd = No, DisplayDiagonal = 17.4f, DisplayResolution = 1920x1080, Color = Black, Weight = 3 kg"
                 };
+                productLaptop_6.Specification = productLaptop_6.Specification.Replace("=", ":");
 
                 Product productLaptop_7 = new Product
                 {
@@ -241,6 +249,7 @@ namespace DataLayer
                     Specification = "Operational System = Windows 10 Pro, Cpu = Intel Core i9, Ram = 32, Core Amount = 8, " +
                   "Ssd = 3 Tb, Hdd = No, DisplayDiagonal = 17.4f, DisplayResolution = 1920x1080, Color = Black, Weight = 3 kg"
                 };
+                productLaptop_7.Specification = productLaptop_7.Specification.Replace("=", ":");
 
                 productRepository.Save(productLaptop_1);
                 productRepository.Save(productLaptop_2);
@@ -249,6 +258,7 @@ namespace DataLayer
                 productRepository.Save(productLaptop_5);
                 productRepository.Save(productLaptop_6);
                 productRepository.Save(productLaptop_7);
+
 
                 var categoryMonitors = categoryRepository.GetByCategoryName("Monitors");
 
@@ -263,6 +273,7 @@ namespace DataLayer
                     Specification = "MonitorcInterface = VGA, PowerConsumption = 0.5, Dimension = 43x38x19, " +
                                     "Frequency = 60 Hz, DisplayDiagonal = 19, DisplayResolution = 1440x900, Color = Black, Weight = 3 kg"
                 };
+                productMonitor_1.Specification = productMonitor_1.Specification.Replace("=", ":");
 
                 Product productMonitor_2 = new Product
                 {
@@ -275,6 +286,7 @@ namespace DataLayer
                     Specification = "MonitorcInterface = VGA dvi-d hdmi, PowerConsumption = 0.5, Dimension = 43x38x19, " +
                                     "Frequency = 60 Hz, DisplayDiagonal = 23.8, DisplayResolution = 1920x1080, Color = Black, Weight = 3 kg"
                 };
+                productMonitor_2.Specification = productMonitor_2.Specification.Replace("=", ":");
 
                 Product productMonitor_3 = new Product
                 {
@@ -287,6 +299,7 @@ namespace DataLayer
                     Specification = "MonitorcInterface = VGA hdmi, PowerConsumption = 0.3, Dimension = 54x42x21, " +
                                     "Frequency = 60 Hz, DisplayDiagonal = 23.5, DisplayResolution = 1920x1080, Color = Black, Weight = 3 kg"
                 };
+                productMonitor_3.Specification = productMonitor_3.Specification.Replace("=", ":");
 
                 Product productMonitor_4 = new Product
                 {
@@ -299,6 +312,7 @@ namespace DataLayer
                     Specification = "MonitorcInterface = hdmi displayPort, PowerConsumption = 0.5, Dimension = 54x49x21, " +
                                     "Frequency = 144 Hz, DisplayDiagonal = 23.5, DisplayResolution = 1920x1080, Color = Black, Weight = 3 kg"
                 };
+                productMonitor_4.Specification = productMonitor_4.Specification.Replace("=", ":");
 
                 Product productMonitor_5 = new Product
                 {
@@ -311,6 +325,7 @@ namespace DataLayer
                     Specification = "MonitorcInterface = VGA hdmi, PowerConsumption = 0.5, Dimension = 43x38x19, " +
                                     "Frequency = 75 Hz, DisplayDiagonal = 23.8, DisplayResolution = 1920x1080, Color = Black, Weight = 3 kg"
                 };
+                productMonitor_5.Specification = productMonitor_5.Specification.Replace("=", ":");
 
                 Product productMonitor_6 = new Product
                 {
@@ -323,6 +338,7 @@ namespace DataLayer
                     Specification = "MonitorcInterface = VGA 2xHDMI, PowerConsumption = 0.5, Dimension = 43x38x19, " +
                                     "Frequency = 75 Hz, DisplayDiagonal = 24.5, DisplayResolution = 1920x1080, Color = Black-Red, Weight = 3 kg"
                 };
+                productMonitor_6.Specification = productMonitor_6.Specification.Replace("=", ":");
 
                 productRepository.Save(productMonitor_1);
                 productRepository.Save(productMonitor_2);
@@ -347,6 +363,7 @@ namespace DataLayer
                                     "MonoBlockInterface = 2 usb 2.0 2xusb 3.0 mic card reader, WebCamera = Yes, " +
                                     "VideoCard = intel uhd graphics 600, Ram = 4, RamType = DDR4, Hdd = 1 Tb, VideoMemorySize = 2"
                 };
+                productMonoblock_1.Specification = productMonoblock_1.Specification.Replace("=", ":");
 
                 Product productMonoblock_2 = new Product
                 {
@@ -361,6 +378,7 @@ namespace DataLayer
                                     "MonoBlockInterface = 2xusb 3.0 hdmi, WebCamera = Yes, " +
                                     "VideoCard = Radeon graphics, Ram = 4, RamType = DDR4, Hdd = 1 Tb, VideoMemorySize = 2"
                 };
+                productMonoblock_2.Specification = productMonoblock_2.Specification.Replace("=", ":");
 
                 Product productMonoblock_3 = new Product
                 {
@@ -375,6 +393,7 @@ namespace DataLayer
                                     "MonoBlockInterface = 2 usb 2.0 2xusb 3.0 mic card reader, WebCamera = Yes, " +
                                     "VideoCard = intel uhd graphics 600, Ram = 4, RamType = DDR4, Hdd = 1 Tb, VideoMemorySize = 2"
                 };
+                productMonoblock_3.Specification = productMonoblock_3.Specification.Replace("=", ":");
 
                 Product productMonoblock_4 = new Product
                 {
@@ -389,6 +408,7 @@ namespace DataLayer
                                     "MonoBlockInterface = 2 usb 2.0 2xusb 3.0 card reader, WebCamera = No, " +
                                     "VideoCard = intel uhd graphics 600, Ram = 4, RamType = DDR4, Hdd = 1 Tb, VideoMemorySize = 2"
                 };
+                productMonoblock_4.Specification = productMonoblock_4.Specification.Replace("=", ":");
 
                 productRepository.Save(productMonoblock_1);
                 productRepository.Save(productMonoblock_2);
@@ -410,6 +430,7 @@ namespace DataLayer
                     Specification = "BackLight = RGB, Connection = wireless, ButtonAmount = 13, Type = optical, " +
                                     "OpticalResolution = 20000, Weight = 400 g, Color = Black"
                 };
+                productMouse_1.Specification = productMouse_1.Specification.Replace("=", ":");
 
                 Product productMouse_2 = new Product
                 {
@@ -422,6 +443,7 @@ namespace DataLayer
                     Specification = "BackLight = RGB, Connection = wireless, ButtonAmount = 7, Type = optical, " +
                                     "OpticalResolution = 16000, Weight = 300 g, Color = Black"
                 };
+                productMouse_2.Specification = productMouse_2.Specification.Replace("=", ":");
 
                 Product productMouse_3 = new Product
                 {
@@ -434,6 +456,7 @@ namespace DataLayer
                     Specification = "BackLight = RGB, Connection = wireless, ButtonAmount = 20, Type = optical, " +
                                     "OpticalResolution = 20000, Weight = 357 g, Color = Black"
                 };
+                productMouse_3.Specification = productMouse_3.Specification.Replace("=", ":");
 
 
                 productRepository.Save(productMouse_1);
@@ -457,6 +480,7 @@ namespace DataLayer
                                     "SimAmount = 1, Core Amount = 6, OperatingSystem = IOS, BuiltMemory = 64, Ram = 3, BatteryCapacity = 2000, " +
                                     "Cpu = Apple, MainCamera = 12, FrontCamera = 7, NavSystem = GPS, Nfc = Yes, FaceRecognition = Yes, BodyMaterial = steel, UsbPort = Apple lightning"
                 };
+                productPhone_1.Specification = productPhone_1.Specification.Replace("=", ":");
 
                 Product productPhone_2 = new Product
                 {
@@ -470,6 +494,7 @@ namespace DataLayer
                                     "SimAmount = 2, Core Amount = 8, OperatingSystem = Android, BuiltMemory = 32, Ram = 3, BatteryCapacity = 3400, " +
                                     "Cpu = Kirin 710, MainCamera = 32, FrontCamera = 16, NavSystem = GPS, Nfc = Yes, FaceRecognition = Yes, BodyMaterial = plastic, UsbPort = microUSB"
                 };
+                productPhone_2.Specification = productPhone_2.Specification.Replace("=", ":");
 
                 Product productPhone_3 = new Product
                 {
@@ -483,6 +508,7 @@ namespace DataLayer
                                     "SimAmount = 2, Core Amount = 8, OperatingSystem = Android, BuiltMemory = 256, Ram = 8, BatteryCapacity = 4600, " +
                                     "Cpu = Qualcomm, MainCamera = 108+13+15, FrontCamera = 20, NavSystem = GPS, Nfc = Yes, FaceRecognition = Yes, BodyMaterial = plastic, UsbPort = Type-C"
                 };
+                productPhone_3.Specification = productPhone_3.Specification.Replace("=", ":");
 
 
                 productRepository.Save(productPhone_1);
@@ -504,6 +530,7 @@ namespace DataLayer
                     Specification = "BraceletMaterial = leather, BodyMaterial = aluminum, Wifi = Yes, Bluetooth = Yes, " +
                                     "Sensor = accelerometer, Weight = 100 g, Color = white"
                 };
+                productSmartWatch_1.Specification = productSmartWatch_1.Specification.Replace("=", ":");
 
                 Product productSmartWatch_2 = new Product
                 {
@@ -516,6 +543,7 @@ namespace DataLayer
                     Specification = "BraceletMaterial = leather, BodyMaterial = steel policarbonium, Wifi = false, Bluetooth = Yes, " +
                                     "Sensor = accelerometer, Weight = 100 g, Color = Black"
                 };
+                productSmartWatch_2.Specification = productSmartWatch_2.Specification.Replace("=", ":");
 
 
                 productRepository.Save(productSmartWatch_1);
@@ -535,6 +563,7 @@ namespace DataLayer
                     Specification = "DisplayDiagonal = 75, DisplayResolution = 3840x2160, Color = Black, Weight = 18 kg, Smart = Yes, " +
                                     "Wifi = Yes, Frequency = 60 Hz, Platform = Android"
                 };
+                productTv_1.Specification = productTv_1.Specification.Replace("=", ":");
 
                 Product productTv_2 = new Product
                 {
@@ -547,6 +576,7 @@ namespace DataLayer
                     Specification = "DisplayDiagonal = 65, DisplayResolution = 3840x2160, Color = Black, Weight = 17 kg, " +
                                     "Smart = Yes, Wifi = Yes, Frequency = 60 Hz, Platform = Android"
                 };
+                productTv_2.Specification = productTv_2.Specification.Replace("=", ":");
 
 
                 productRepository.Save(productTv_1);

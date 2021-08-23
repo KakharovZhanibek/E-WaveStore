@@ -1,7 +1,7 @@
 ﻿@model LoginVM
 
     <div class="container" style="width: 400px; padding: 50px 0;">
-        <h2>Вход в приложение</h2>
+        <h2>Log in to the app</h2>
         <form method="post" asp-controller="Account" asp-action="Login"
               asp-route-returnUrl="@Model.ReturnUrl">
             <div asp-validation-summary="ModelOnly"></div>
@@ -20,7 +20,7 @@
                 <input asp-for="RememberMe" />
             </div>
             <div>
-                <input type="submit" value="Войти" class="btn" style="background-color: #2B6684; color: white; width: 120px; margin-top: 20px;" />
+                <input type="submit" value="Login" class="btn" style="background-color: #2B6684; color: white; width: 120px; margin-top: 20px;" />
             </div>
         </form>
     </div>

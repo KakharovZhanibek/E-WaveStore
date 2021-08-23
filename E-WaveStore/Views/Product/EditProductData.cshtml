@@ -38,7 +38,16 @@
                 </div>
 
                 <div class="topMargin20 bottomMargin50">
-                    <input class="btn btn-primary" type="submit" value="Save Changes" />
+                    @try
+                    {
+                        <input class="btn btn-primary" type="submit" value="Save Changes" />
+                    }
+                    catch (Exception ex)
+                    {
+
+                        
+                    }
+                    
                 </div>
             </form>
         </div>

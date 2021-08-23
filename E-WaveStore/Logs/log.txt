@@ -1,0 +1,10 @@
+08/23/2021 23:36:09 Application starting up in 08/23/2021 17:36:09
+08/23/2021 23:36:16 No type was specified for the decimal property '"UnitPrice"' on entity type '"Order"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType()', specify precision and scale using 'HasPrecision()' or configure a value converter using 'HasConversion()'.
+08/23/2021 23:36:16 No type was specified for the decimal property '"Price"' on entity type '"Product"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType()', specify precision and scale using 'HasPrecision()' or configure a value converter using 'HasConversion()'.
+08/23/2021 23:36:17 You requested the Home Page.
+08/23/2021 23:36:18 HTTP "GET" "/" responded 200 in 3078.7801 ms
+08/24/2021 00:21:35 Application starting up in 08/23/2021 18:21:35
+08/24/2021 00:21:43 No type was specified for the decimal property '"UnitPrice"' on entity type '"Order"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType()', specify precision and scale using 'HasPrecision()' or configure a value converter using 'HasConversion()'.
+08/24/2021 00:21:43 No type was specified for the decimal property '"Price"' on entity type '"Product"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType()', specify precision and scale using 'HasPrecision()' or configure a value converter using 'HasConversion()'.
+08/24/2021 00:21:45 You requested the Home Page.
+08/24/2021 00:21:45 HTTP "GET" "/" responded 200 in 3900.3015 ms

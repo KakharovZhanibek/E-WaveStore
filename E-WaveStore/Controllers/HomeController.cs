@@ -30,15 +30,7 @@ namespace E_WaveStore.Controllers
         {
             await SeedExtention.SeedAsync(_host);
             _logger.LogInformation("You requested the Home Page.");
-            try
-            {
-                throw new Exception("This is our Exception.");
-            }
-            catch (Exception ex)
-            {
-
-                _logger.LogError(ex,"we caught this exception in the IndexAsync call." );
-            }
+           
             return View();
         }
 

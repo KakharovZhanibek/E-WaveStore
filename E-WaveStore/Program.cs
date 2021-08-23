@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Configuration;
+using Serilog;
 /*using Serilog;*/
 
 namespace E_WaveStore
@@ -17,13 +18,34 @@ namespace E_WaveStore
         public static void Main(string[] args)
         {
 
-            var host = CreateHostBuilder(args).Build()/*.Run()*/;
+           /* var host = CreateHostBuilder(args).Build()*//*.Run()*/;
+            var configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .Build();
+
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(configuration)
+                .CreateLogger();
 
             //
-            var logger = host.Services.GetRequiredService<ILogger<Program>>();
-            logger.LogInformation("The application started in {Time}", DateTime.UtcNow);
+            //var logger = host.Services.GetRequiredService<ILogger<Program>>();
+            //logger.LogInformation("The application started in {Time}", DateTime.UtcNow);
 
-            host.Run();
+            //host.Run();
+
+            try
+            {
+                Log.Information("Application starting up in {Time}", DateTime.UtcNow);
+                CreateHostBuilder(args).Build().Run();
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal(ex, "The application failed to start correctly");
+            }
+            finally
+            {
+                Log.CloseAndFlush();
+            }
             //
         }
 
@@ -31,14 +53,20 @@ namespace E_WaveStore
         {
             return Host.CreateDefaultBuilder(args)
                 //Logging changes started
-                .ConfigureLogging((context, logging) =>
-                {
-                    logging.ClearProviders();
-                    logging.AddConfiguration(context.Configuration.GetSection("Logging"));
-                    logging.AddDebug();
-                    logging.AddConsole();
-                })
+
+                .UseSerilog()
+
+            #region
+                //.ConfigureLogging((context, logging) =>
+                //{
+                //    logging.ClearProviders();
+                //    logging.AddConfiguration(context.Configuration.GetSection("Logging"));
+                //    logging.AddDebug();
+                //    logging.AddConsole();
+                //})
                 //
+            #endregion
+
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

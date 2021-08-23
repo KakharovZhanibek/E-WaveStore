@@ -87,13 +87,11 @@
                     }
                     else
                     {
-                        <a class="nav-link px-2 text-white" asp-area="" asp-controller="Account" asp-action="Register">My Account</a>
-
-                        if (User.IsInRole("User"))
+                        if (User.IsInRole("user"))
                         {
-                        <a class="nav-link px-2 text-white" asp-area="" asp-controller="Product" asp-action="AllProductInCart">
-                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                        </a>
+                            <a class="nav-link px-2 text-white" asp-area="" asp-controller="Product" asp-action="AllProductInCart">
+                                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                            </a>
                         }
 
                         <form method="post" asp-controller="Account" asp-action="Logout">

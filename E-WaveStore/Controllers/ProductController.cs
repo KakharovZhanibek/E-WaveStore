@@ -129,8 +129,15 @@ namespace E_WaveStore.Controllers
                 }
                 model.ImgUrl = $"/Images/ProductImages/{fileName}";
             }
-
-            _productPresentation.GetEditProductAsync(model);
+            try
+            {
+                _productPresentation.GetEditProductAsync(model);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+            }
+           
 
             return RedirectToAction("ProductList");
         }
@@ -138,6 +145,7 @@ namespace E_WaveStore.Controllers
         [Authorize(Roles = "admin")]
         public JsonResult RemoveProduct(string modelName)
         {
+            
             return Json(true);
             //return Json(_productPresentation.Remove(modelName));
         }
@@ -170,18 +178,25 @@ namespace E_WaveStore.Controllers
             return View("AllProductInCart");
         }
 
-        [HttpGet]
-        [Authorize(Roles = "user")]
+        [HttpGet]        
         public IActionResult Order(string modelName)
         {
             var product = _productPresentation.GetByModelName(modelName);
             ViewBag.Product = product;
             ViewBag.PaymentTypeNames = _orderPresentation.GetAllPaymentTypeNames();
-            return View();
+
+            var order = new OrderVM();
+            order.UnitPrice = product.Price;
+            order.DateAndTime = DateTime.Now;
+            order.Product = product;
+            order.Quantity = 1;
+
+            return View(order);
         }
         [HttpPost]
         public IActionResult Order(OrderVM orderVM)
         {
+
             /* 1) проверить есть в БД юзер с определенным email
              2) если нет добавить new User { }; userManager.CreateAsync(User, "User");
              3) вожможно создам модельку с AccountNumber / CVV / PhoneNumber
