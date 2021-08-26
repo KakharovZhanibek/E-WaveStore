@@ -11,7 +11,10 @@ namespace DataLayer.Entities
         public int Quantity { get; set; } // кол-во
         [Required]
         public DateTime DateAndTime { get; set; }
-        public virtual User ApplicationUser { get; set; }
+       //public virtual User ApplicationUser { get; set; }
+        public string UserName { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
         public virtual Product Product { get; set; }
         public virtual PaymentType PaymentType { get; set; }
     }

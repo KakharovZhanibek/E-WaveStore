@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace E_WaveStore.Models
 {
-    public class PaymentTypeVM : BaseVM
+    public class PaymentTypeVM
     {
-
         [Required]
         public string Name { get; set; }
     }

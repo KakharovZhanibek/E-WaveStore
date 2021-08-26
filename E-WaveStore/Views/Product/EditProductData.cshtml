@@ -5,7 +5,7 @@
         <div class="col-sm-6 offset-3">
             <h1>Edit Product Data</h1>
 
-            <form action="/Product/EditProductAsync" method="post" enctype="multipart/form-data">
+            <form action="/Product/AddNewOrEditProduct" method="post" enctype="multipart/form-data">
                 <div>
                     @Html.HiddenFor(model => model.Id)
                 </div>
@@ -14,7 +14,7 @@
                 </div>
                 <img src=@(Model.ImgUrl == null ? "" : $"{Model.ImgUrl}") class="card-img-top" style="width:100px;">
                 <div>
-                    Avatar: <input class="form-control" type="file" name="@nameof(KeyboardVM.ImgFile)" />
+                    Avatar: <input class="form-control" type="file" name="@nameof(E_WaveStore.Models.ViewModels.ProductVM.ImgFile)" />
                 </div>
                 <div>
                     BrandName: @Html.TextBoxFor(x => x.BrandName, new { @Value = Model.BrandName, @readonly = true, Class = "form-control" })
@@ -29,10 +29,10 @@
                 <div>
                     Amount: @Html.TextBoxFor(x => x.Amount, new { @Value = Model.Amount, Class = "form-control" })
                 </div>
-                @* <div>
-                        CategoryName: @Html.TextBoxFor(x => x.CategoryVM.CategoryName, new { @Value = Model.CategoryVM.CategoryName, @readonly = true, Class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.CategoryVM.CategoryName)
-                    </div>*@
+                <div>
+                    CategoryName: @Html.TextBoxFor(x => x.Category.CategoryName, new { @Value = Model.Category.CategoryName, @readonly = true, Class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Category.CategoryName)
+                </div>
                 <div>
                     Specification: @Html.TextBoxFor(x => x.Specification, new { @Value = Model.Specification, Class = "form-control" })
                 </div>
@@ -40,14 +40,14 @@
                 <div class="topMargin20 bottomMargin50">
                     @try
                     {
-                        <input class="btn btn-primary" type="submit" value="Save Changes" />
+                    <input style="width: 120px; background-color: #004059; color:#ffffff" type="submit" value="Save Changes" />
                     }
                     catch (Exception ex)
                     {
 
-                        
+
                     }
-                    
+
                 </div>
             </form>
         </div>

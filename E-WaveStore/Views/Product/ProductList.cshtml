@@ -44,9 +44,10 @@
 
                 </ul>
             </div>
-
-            @*<a class="btn btn-primary leftMargin15" asp-controller="Keyboard" asp-action="AddNewKeyboard">Add New Keyboard</a>*@
-
+            @if (User.IsInRole("admin"))
+            {
+                <a class="btn btn-primary leftMargin15" asp-controller="Product" asp-action="AddNewProduct">Add New Product</a>
+            }
         </form>
     </div>
 
@@ -55,7 +56,7 @@
 <section class="pt-5 pb-5">
     <div class="container" style="display:flex; flex-direction:row">
         <div class="container" style="display:flex; flex-direction: column; width:20%;">
-            
+
             <div style="display: flex; flex-direction: column; border: solid; border-width:1px; padding: 10px;
 ">
 
@@ -82,7 +83,7 @@
 
             <div>
                 <input id="getCheckedValues" type="submit" value="Apply" class="btn btn-success" style="margin-top: 15px; width: 155px;" />
-            </div>            
+            </div>
 
         </div>
 

@@ -1,0 +1,40 @@
+﻿@model E_WaveStore.Models.ViewModels.ProductVM
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 offset-3">
+            <h1>Add New Product</h1>
+
+            <form action="/Product/AddNewOrEditProduct" method="post" enctype="multipart/form-data">
+
+                <div>
+                    Avatar: <input class="form-control" type="file" name="@nameof(E_WaveStore.Models.ViewModels.ProductVM.ImgFile)" />
+                </div>
+                <div>
+                    BrandName: @Html.TextBoxFor(x => x.BrandName, new { Class = "form-control", @required = "required" })
+                </div>
+                <div>
+                    ModelName: @Html.TextBoxFor(x => x.ModelName, new { Class = "form-control", @required = "required" })
+                </div>
+                <div>
+                    Price: @Html.TextBoxFor(x => x.Price, new { Class = "form-control", @required = "required" })
+                </div>
+                <div>
+                    Amount: @Html.TextBoxFor(x => x.Amount, new { Class = "form-control", @required = "required" })
+                </div>
+                <div>
+                    CategoryName: @Html.TextBoxFor(x => x.Category.CategoryName, new { Class = "form-control", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.Category.CategoryName)
+                </div>
+                <div>
+                    Specification: @Html.TextAreaFor(x => x.Specification, new { Class = "form-control", @required = "required" })
+                </div>
+
+                <div class="topMargin20 bottomMargin50">
+                    <input style="width: 150px; background-color: #004059; color:#ffffff" type="submit" value="Add New Product" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

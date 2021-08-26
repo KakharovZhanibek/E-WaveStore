@@ -18,7 +18,6 @@ namespace E_WaveStore
         public static void Main(string[] args)
         {
 
-           /* var host = CreateHostBuilder(args).Build()*//*.Run()*/;
             var configuration = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
                 .Build();
@@ -27,15 +26,9 @@ namespace E_WaveStore
                 .ReadFrom.Configuration(configuration)
                 .CreateLogger();
 
-            //
-            //var logger = host.Services.GetRequiredService<ILogger<Program>>();
-            //logger.LogInformation("The application started in {Time}", DateTime.UtcNow);
-
-            //host.Run();
-
             try
             {
-                Log.Information("Application starting up in {Time}", DateTime.UtcNow);
+                Log.Information("Application started up");
                 CreateHostBuilder(args).Build().Run();
             }
             catch (Exception ex)

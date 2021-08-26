@@ -19,6 +19,7 @@ namespace DataLayer
         public DbSet<Order> Orders { get; set; }
         public DbSet<PaymentType> PaymentTypes { get; set; }
         public DbSet<Cart> Carts { get; set; }
+        public DbSet<BankAccount> BankAccounts { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

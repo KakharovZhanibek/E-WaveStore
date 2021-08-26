@@ -14,9 +14,7 @@ namespace E_WaveStore.PresentationLayer.Implementations
     {
         private IOrderRepository _orderRepository;
         private IPaymentTypeRepository _paymentTypeRepository;
-        private IMapper _mapper;
-
-        public const int PageSize = 5;
+        private IMapper _mapper;              
 
         public OrderPresentation(IOrderRepository orderRepository, IPaymentTypeRepository paymentTypeRepository, IMapper mapper)
         {
@@ -26,7 +24,16 @@ namespace E_WaveStore.PresentationLayer.Implementations
         }
         public void AddOrder(OrderVM orderVM)
         {
+            var paymentType = _paymentTypeRepository.GetAll().FirstOrDefault(x => x.Name == orderVM.PaymentType.Name);
+            /* orderVM.PaymentType = _mapper.Map<PaymentTypeVM>(paymentType);*/
+                        
             var order = _mapper.Map<Order>(orderVM);
+            order.UserName = orderVM.ApplicationUser.Username;
+            order.Email = orderVM.ApplicationUser.Email;
+            order.Phone = orderVM.ApplicationUser.PhoneNumber;
+            /*order.ApplicationUser.Id = null;*/
+            order.PaymentType = paymentType;
+
             _orderRepository.Save(order);
         }
 
@@ -47,7 +54,5 @@ namespace E_WaveStore.PresentationLayer.Implementations
         {            
             return _paymentTypeRepository.GetAll().Select(x => x.Name).ToList();
         }
-
-
     }
 }

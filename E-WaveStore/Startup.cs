@@ -27,8 +27,7 @@ using Serilog;
 namespace E_WaveStore
 {
     public class Startup
-    {
-        // public const string AuthMethod = "TestCookie";
+    {        
         public Startup(Microsoft.Extensions.Configuration.IConfiguration configuration)
         {
             Configuration = configuration;
@@ -37,8 +36,8 @@ namespace E_WaveStore
         public Microsoft.Extensions.Configuration.IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
-        {            
-            /*services.AddControllersWithViews().AddNewtonsoftJson();*/
+        {           
+            
             services.AddControllersWithViews(options =>
             {
                 options.CacheProfiles.Add("Caching",
@@ -56,21 +55,21 @@ namespace E_WaveStore
 
             services.AddRazorPages()
                  .AddRazorRuntimeCompilation();
+
             services.AddDbContext<ApplicationContext>(options =>
                         options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), x => x.MigrationsAssembly("E-WaveStore")),
              ServiceLifetime.Transient);
 
-            services.AddIdentity<User, IdentityRole>(opts =>
+            services.AddIdentity<User, IdentityRole>(options =>
             {
-                opts.Password.RequiredLength = 5;
-                opts.Password.RequireNonAlphanumeric = false;
-                opts.Password.RequireLowercase = false;
-                opts.Password.RequireUppercase = false;
-                opts.Password.RequireDigit = false;
-                opts.User.RequireUniqueEmail = true;
+                options.Password.RequiredLength = 5;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireDigit = false;
+                options.User.RequireUniqueEmail = true;
             })
                 .AddEntityFrameworkStores<ApplicationContext>();
-
 
             RegisterRepositories(services);
             
@@ -78,18 +77,8 @@ namespace E_WaveStore
             services.AddScoped<IProductPresentation, ProductPresentation>();
             services.AddScoped<ICartPresentation, CartPresentation>();
             services.AddScoped<IOrderPresentation, OrderPresentation>();
-            //services.AddScoped<IPaymentTypePresentation, PaymentTypePresentation>();
-
-            /*  services.AddScoped<IKeyboardPresentation, KeyboardPresentation>();                       
-              services.AddScoped<ILaptopPresentation, LaptopPresentation>();
-              services.AddScoped<IMonitorPresentation, MonitorPresentation>();
-              services.AddScoped<IMonoblockPresentation, MonoblockPresentation>();
-              services.AddScoped<IMousePresentation, MousePresentation>();*/
-
-            /* services.AddScoped<IPhonePresentation, PhonePresentation>();
-             services.AddScoped<ISmartWatchPresentation, SmartWatchPresentation>();
-             services.AddScoped<ITvPresentation, TvPresentation>();*/
-
+            services.AddScoped<IBankAccountPresentation, BankAccountPresentation>();
+          
             RegisterAutoMapper(services);
 
             services.AddSwaggerGen(c =>
@@ -106,12 +95,6 @@ namespace E_WaveStore
         }
         private void RegisterRepositories(IServiceCollection services)
         {
-            /* IEnumerable<Type> implementationsType = Assembly
-                 .GetExecutingAssembly()
-                 .GetTypes()
-                 .Where(type =>
-                         !type.IsInterface && type.GetInterface(typeof(IBaseRepository<>).Name) != null);*/
-
             IEnumerable<Type> implementationsType = Assembly
                .Load("DataLayer")
                .GetTypes()
@@ -126,7 +109,7 @@ namespace E_WaveStore
 
                 foreach (Type serviceType in servicesType)
                 {
-                    services.AddScoped(serviceType, implementationType);                    
+                    services.AddScoped(serviceType, implementationType);
                 }
             }
         }
@@ -137,17 +120,13 @@ namespace E_WaveStore
 
             MapBothSide<Category, CategoryVM>(configurationExp);
             MapBothSide<Product, ProductVM>(configurationExp);
-            MapBothSide<Product, KeyboardVM>(configurationExp);
-            MapBothSide<Product, LaptopVM>(configurationExp);
-            MapBothSide<Product, MonitorVM>(configurationExp);
-            MapBothSide<Product, MonoBlockVM>(configurationExp);
-            MapBothSide<Product, MouseVM>(configurationExp);
-            MapBothSide<Product, PhoneVm>(configurationExp);
-            MapBothSide<Product, SmartWatchVM>(configurationExp);
-            MapBothSide<Product, TvVM>(configurationExp);
+         
             MapBothSide<Cart, CartVM>(configurationExp);
             MapBothSide<Order, OrderVM>(configurationExp);
+          
             MapBothSide<PaymentType, PaymentTypeVM>(configurationExp);
+
+            MapBothSide<BankAccount, BankAccountVM>(configurationExp);
 
             var config = new MapperConfiguration(configurationExp);
             var mapper = new Mapper(config);
@@ -198,7 +177,7 @@ namespace E_WaveStore
             app.UseAuthentication();
 
             app.UseAuthorization();
-
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

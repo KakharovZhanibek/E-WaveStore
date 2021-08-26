@@ -15,9 +15,7 @@ namespace DataLayer.Repositories.Implementations
 
         public Product GetByModelName(string modelName)
         {
-            var test = _storeDbContext.Products.SingleOrDefault(x => x.ModelName == modelName);
-            return test;
-            //return _storeDbContext.Products.SingleOrDefault(x => x.ModelName == modelName);
+            return _storeDbContext.Products.SingleOrDefault(x => x.ModelName == modelName);
         }
         public List<Product> GetAllByBrandName(string brandName)
         {

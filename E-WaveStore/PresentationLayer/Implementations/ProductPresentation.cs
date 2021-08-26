@@ -15,15 +15,17 @@ namespace E_WaveStore.PresentationLayer.Implementations
     public class ProductPresentation : IProductPresentation
     {
         private IProductRepository _productRepository;
+        private ICategoryRepository _categoryRepository;
         private IMapper _mapper;
 
         public const int PageSize = 5;
 
-        public ProductPresentation(IProductRepository productRepository, IMapper mapper)
+        public ProductPresentation(IProductRepository productRepository, IMapper mapper, ICategoryRepository categoryRepository)
         {
             _productRepository = productRepository;
             _mapper = mapper;
-        }        
+            _categoryRepository = categoryRepository;
+        }
 
         public PagingList<ProductVM> GetList(string category, string actionName, int page)
         {
@@ -37,8 +39,8 @@ namespace E_WaveStore.PresentationLayer.Implementations
 
             products.RouteValue = new RouteValueDictionary { { "categoryName", category } };
 
-            //products.Action = actionName;
-            products.Action = "ProductList";
+            products.Action = actionName;
+          
             return products;
         }
 
@@ -65,7 +67,7 @@ namespace E_WaveStore.PresentationLayer.Implementations
 
             if (!String.IsNullOrEmpty(brandNames))
             {
-                var brandNamesList = brandNames.Split(", ");//.ToList();
+                var brandNamesList = brandNames.Split(", ");
                 
                 foreach (var brandName in brandNamesList)
                 {                    
@@ -73,8 +75,6 @@ namespace E_WaveStore.PresentationLayer.Implementations
                    
                     selectedModelsByBrandName.AddRange(selectedBypriceModels.Where(x => x.BrandName == bn));
                 }
-
-               // selectedModelsByBrandName.ToList();
             }
 
             var products = PagingList.Create(selectedModelsByBrandName, PageSize, page);
@@ -83,8 +83,7 @@ namespace E_WaveStore.PresentationLayer.Implementations
             products.Action = actionName;
             return products;
         }
-
-        // https://localhost:5001/Product/ProductSearchModelName?categoryName=Laptops&searchbyModelName=x515MA
+                
         public PagingList<ProductVM> GetProductSearchModelName(string searchbyModelName, string actionName, int page)
         {
             var selectedModels = _productRepository.GetAll().Select(x => _mapper.Map<ProductVM>(x))
@@ -130,9 +129,11 @@ namespace E_WaveStore.PresentationLayer.Implementations
             return _mapper.Map<ProductVM>(model);
         }
 
-        public void GetEditProductAsync(ProductVM model)
+        public void GetAddNewOrEditProduct(ProductVM model)
         {
             var product = _mapper.Map<Product>(model);
+            var category = _categoryRepository.GetByCategoryName(model.Category.CategoryName);
+            product.Category = category;
 
             _productRepository.Save(product);
         }

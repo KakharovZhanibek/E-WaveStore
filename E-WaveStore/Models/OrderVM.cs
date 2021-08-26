@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace E_WaveStore.Models
 {
-    public class OrderVM : BaseVM
+    public class OrderVM
     {        
         public decimal UnitPrice { get; set; } // Цена За Единицу
         public int Quantity { get; set; } // кол-во

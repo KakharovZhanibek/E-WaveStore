@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using E_WaveStore.Models;
 using Microsoft.AspNetCore.Authorization;
-using E_WaveStore.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Hosting;
 using DataLayer;
@@ -30,8 +29,15 @@ namespace E_WaveStore.Controllers
         {
             await SeedExtention.SeedAsync(_host);
             _logger.LogInformation("You requested the Home Page.");
-           
-            return View();
+            try
+            {
+                return View();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex,"Error in IndexAsync method");
+                return RedirectToAction("Error");
+            }
         }
 
         /*[ResponseCache(CacheProfileName = "NoCaching")]*/

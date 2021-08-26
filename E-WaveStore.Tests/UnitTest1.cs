@@ -23,20 +23,20 @@ namespace E_WaveStore.Tests
 {
     public class Tests
     {
-        private Mock<IProductRepository> productRepositoryMock;       
-        private Mock<IOrderRepository> orderRepositoryMock;       
-        private Mock<ICategoryRepository> categoryRepositoryMock;       
-        private Mock<ICartRepository> cartRepositoryMock; 
-        
-        private Mock<IPaymentTypeRepository> paymentTypeRepositoryMock;    
-        
+        private Mock<IProductRepository> productRepositoryMock;
+        private Mock<IOrderRepository> orderRepositoryMock;
+        private Mock<ICategoryRepository> categoryRepositoryMock;
+        private Mock<ICartRepository> cartRepositoryMock;
+
+        private Mock<IPaymentTypeRepository> paymentTypeRepositoryMock;
+
         private Mock<IMapper> mapperMock;
-        
+
         private IWebHostEnvironment webHostEnvironment;
         private ProductPresentation productPresentation;
         private OrderPresentation orderPresentation;
         private CategoryPresentation categoryPresentation;
-        private CartPresentation cartPresentation;                  
+        private CartPresentation cartPresentation;
 
         [SetUp]
         public void Setup()
@@ -50,8 +50,9 @@ namespace E_WaveStore.Tests
             mapperMock = new Mock<IMapper>();
 
             productPresentation = new ProductPresentation(
-                productRepositoryMock.Object,              
-                mapperMock.Object);
+                productRepositoryMock.Object,
+                mapperMock.Object,
+                 categoryRepositoryMock.Object);
 
             orderPresentation = new OrderPresentation(
                orderRepositoryMock.Object,
@@ -76,38 +77,38 @@ namespace E_WaveStore.Tests
                 new Product(){BrandName="SteelSeries",ModelName="someShit",Price=21540,Amount=6,ImgUrl="SomeImg",Specification="Type = mechanical",Category=new Category(){ CategoryName="Keyboards"} }
             };
         }
-       /* [Test]
-        public void Test_ProductList()
-        {
+        /* [Test]
+         public void Test_ProductList()
+         {
 
-            var prod = new Product();
-            productRepositoryMock.Setup(x => x.GetByModelName("SmartBook 141")).Returns(prod);
-            var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[] {
-                                        new Claim(ClaimTypes.NameIdentifier, "SomeValueHere"),
-                                        new Claim(ClaimTypes.Name, "some@somecompany.com")
-                                   }, "TestAuthentication"));
+             var prod = new Product();
+             productRepositoryMock.Setup(x => x.GetByModelName("SmartBook 141")).Returns(prod);
+             var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[] {
+                                         new Claim(ClaimTypes.NameIdentifier, "SomeValueHere"),
+                                         new Claim(ClaimTypes.Name, "some@somecompany.com")
+                                    }, "TestAuthentication"));
 
-            ProductController controller = new ProductController(productPresentation, webHostEnvironment, categoryPresentation, cartPresentation, orderPresentation);
+             ProductController controller = new ProductController(productPresentation, webHostEnvironment, categoryPresentation, cartPresentation, orderPresentation);
 
-            controller.ControllerContext.HttpContext = new DefaultHttpContext { User = user };
-            var products = new List<Product>();
+             controller.ControllerContext.HttpContext = new DefaultHttpContext { User = user };
+             var products = new List<Product>();
 
-            productRepositoryMock.Setup(x => x.GetAll()).Returns(getSomeProducts);
+             productRepositoryMock.Setup(x => x.GetAll()).Returns(getSomeProducts);
 
-            var test2 = controller.ProductList("Laptops");
+             var test2 = controller.ProductList("Laptops");
 
-            var result = true ? test2 != null : false;
+             var result = true ? test2 != null : false;
 
-            Assert.IsTrue(result);
+             Assert.IsTrue(result);
 
-        }
+         }
 
-        [Test]
-        public void Test_FilterProductbyPriceAndBrandName()
-        {
-            ProductController controller = new ProductController(productPresentation, webHostEnvironment, categoryPresentation, cartPresentation, orderPresentation);
+         [Test]
+         public void Test_FilterProductbyPriceAndBrandName()
+         {
+             ProductController controller = new ProductController(productPresentation, webHostEnvironment, categoryPresentation, cartPresentation, orderPresentation);
 
-            productRepositoryMock.Setup(x => x.GetAll()).Returns(getSomeProducts);
-        }*/
+             productRepositoryMock.Setup(x => x.GetAll()).Returns(getSomeProducts);
+         }*/
     }
 }

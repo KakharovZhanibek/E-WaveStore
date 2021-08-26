@@ -13,7 +13,7 @@
                     <h2>@Model.BrandName</h2>
                     <h3> <b>@Model.ModelName </b> </h3>
                     <h3>@Model.Price</h3>
-                  
+
                     @await Html.PartialAsync("_CartBuyBtnPartial", Model, new ViewDataDictionary(new Microsoft.AspNetCore.Mvc.ModelBinding.EmptyModelMetadataProvider(),
                                                                                                    new Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary()) { { "ProductsInCart", ViewBag.ProductsInCart } })
                 </div>
@@ -23,11 +23,16 @@
 
                 <div style="padding:50px 0">
                     <h4>Specification</h4>
-                    
-                    @foreach (var str in ViewBag.SpecificationAsStrList)
-                    {
-                        <p> @str </p>
-                    }
+                    <table class="table">
+                        @foreach (KeyValuePair<string, string> item in ViewBag.SpecificationsDictionary@*var str in ViewBag.SpecificationAsStrList*@)
+                        {
+                            @*<tr> @str</tr>*@
+                            <tr>
+                                <td>@item.Key</td>
+                                <td>@item.Value</td>
+                            </tr>
+                        }
+                    </table>
                     @*<p> @Model.Specification </p>*@
                 </div>
             </div>

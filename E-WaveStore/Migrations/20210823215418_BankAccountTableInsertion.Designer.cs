@@ -4,14 +4,16 @@ using DataLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace E_WaveStore.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20210823215418_BankAccountTableInsertion")]
+    partial class BankAccountTableInsertion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,17 +87,14 @@ namespace E_WaveStore.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<DateTime>("DateAndTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<long?>("PaymentTypeId")
                         .HasColumnType("bigint");
-
-                    b.Property<string>("Phone")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<long?>("ProductId")
                         .HasColumnType("bigint");
@@ -106,10 +105,9 @@ namespace E_WaveStore.Migrations
                     b.Property<decimal>("UnitPrice")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("PaymentTypeId");
 
@@ -379,6 +377,10 @@ namespace E_WaveStore.Migrations
 
             modelBuilder.Entity("DataLayer.Entities.Order", b =>
                 {
+                    b.HasOne("DataLayer.Entities.User", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId");
+
                     b.HasOne("DataLayer.Entities.PaymentType", "PaymentType")
                         .WithMany()
                         .HasForeignKey("PaymentTypeId");
@@ -386,6 +388,8 @@ namespace E_WaveStore.Migrations
                     b.HasOne("DataLayer.Entities.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId");
+
+                    b.Navigation("ApplicationUser");
 
                     b.Navigation("PaymentType");
 

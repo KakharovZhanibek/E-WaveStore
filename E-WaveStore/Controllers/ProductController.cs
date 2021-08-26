@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,11 +22,12 @@ namespace E_WaveStore.Controllers
         private IOrderPresentation _orderPresentation;
         private ICategoryPresentation _categoryPresentation;
         private IWebHostEnvironment _webHostEnvironment;
-        private ICartPresentation _cartPresentation;        
+        private ICartPresentation _cartPresentation;
+        private readonly IBankAccountPresentation _bankAccountPresentation;
         private readonly ILogger _logger;
         public ProductController(IProductPresentation productPresentation, IWebHostEnvironment webHostEnvironment,
             ICategoryPresentation categoryPresentation, ICartPresentation cartPresentation,
-            IOrderPresentation orderPresentation, ILogger<ProductController> logger)
+            IOrderPresentation orderPresentation, ILogger<ProductController> logger, IBankAccountPresentation bankAccountPresentation)
         {
 
             _productPresentation = productPresentation;
@@ -34,87 +36,127 @@ namespace E_WaveStore.Controllers
             _cartPresentation = cartPresentation;
             _orderPresentation = orderPresentation;
             _logger = logger;
-        }
-        public IActionResult Index()
-        {
-            _logger.LogInformation("Test Log Message");
-            return View();
+            _bankAccountPresentation = bankAccountPresentation;
         }
 
+
         [HttpGet]
-        //[ResponseCache(CacheProfileName = "Caching")]
+        [ResponseCache(CacheProfileName = "Caching")]
         public IActionResult ProductList(string categoryName, int page = 1)
         {
             var actionName = "ProductList";
-            var viewModels = _productPresentation.GetList(categoryName, actionName, page);
-
-            ViewBag.BrandNames = _productPresentation.GetAllBrandNames(categoryName);
-            ViewBag.CategoryName = categoryName;
 
             try
             {
+                var viewModels = _productPresentation.GetList(categoryName, actionName, page);
+
+                ViewBag.BrandNames = _productPresentation.GetAllBrandNames(categoryName);
+                ViewBag.CategoryName = categoryName;
+
                 ViewBag.ProductsInCart = _cartPresentation.GetAllProductInCart(User.Identity.Name);
-                _logger.LogInformation("success");
+                _logger.LogInformation("Requested data was got successfully.");
+                return View(viewModels);
+            }
+            catch (Exception ex)
+            {                
+                _logger.LogError(ex, "Error has been occured in ProductList method.");
+                return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            }
+        }
+        
+        [HttpGet]
+        public IActionResult FilterProductbyPriceAndBrandName(string categoryName, int minPrice, int maxPrice, string brandNames, int page = 1)
+        {            
+            var actionName = "ProductList";
+            try
+            {
+                var viewModels = _productPresentation.GetFilterProductbyPriceAndBrandName(categoryName, minPrice, maxPrice, brandNames, actionName, page);
+
+                ViewBag.BrandNames = _productPresentation.GetAllBrandNames(categoryName);
+                ViewBag.CategoryName = categoryName;
+
+                return View("ProductList", viewModels);
             }
             catch (Exception ex)
             {
-                //Console.WriteLine(ex.Message);
-                _logger.LogInformation("error {err}", ex);
+                _logger.LogError(ex, "Error has been occured in FilterProductbyPriceAndBrandName method.");
+                return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
             }
-
-            return View(viewModels);
-        }
-
-        // https://localhost:5001/Product/FilterProductbyPriceAndBrandName?categoryName=Laptops&minPrice=0&maxPrice=0&brandNames=Prestigio,%20Acer
-        [HttpGet]
-        public IActionResult FilterProductbyPriceAndBrandName(string categoryName, int minPrice, int maxPrice, string brandNames, int page = 1)
-        {
-            //var actionName = "FilterProductbyPriceAndBrandName";
-            var actionName = "ProductList";
-
-            var viewModels = _productPresentation.GetFilterProductbyPriceAndBrandName(categoryName, minPrice, maxPrice, brandNames, actionName, page);
-
-            ViewBag.BrandNames = _productPresentation.GetAllBrandNames(categoryName);
-            ViewBag.CategoryName = categoryName;
-
-            return View("ProductList", viewModels);            
         }
 
         [HttpGet]
         public IActionResult ProductSearchModelName(string searchbyModelName, string categoryName, int page = 1)
         {
             var actionName = "ProductList";
-            var viewModels = _productPresentation.GetProductSearchModelName(searchbyModelName, actionName, page);
-            ViewBag.BrandNames = _productPresentation.GetAllBrandNames(categoryName);
-            ViewBag.CategoryName = categoryName;
-            ViewBag.ProductsInCart = _cartPresentation.GetAllProductInCart(User.Identity.Name);
+            try
+            {
+                var viewModels = _productPresentation.GetProductSearchModelName(searchbyModelName, actionName, page);
+                ViewBag.BrandNames = _productPresentation.GetAllBrandNames(categoryName);
+                ViewBag.CategoryName = categoryName;
+                ViewBag.ProductsInCart = _cartPresentation.GetAllProductInCart(User.Identity.Name);
 
-            return View("ProductList", viewModels);
-        }
-
-
-        [HttpGet]
-        [Authorize(Roles ="admin, manager")]
-        public IActionResult EditProductData(string modelName)
-        {
-            var keyboard = _productPresentation.GetByModelName(modelName);
-
-            return View(keyboard);
+                return View("ProductList", viewModels);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error has been occured in ProductSearchModelName method.");
+                return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            }
         }
 
         [HttpGet]
         public IActionResult ProductFullInfo(string modelName)
         {
-            var product = _productPresentation.GetByModelName(modelName);
-            var specificationAsStrList = product.Specification.Split(", ");
-            ViewBag.SpecificationAsStrList = specificationAsStrList;
-            ViewBag.ProductsInCart = _cartPresentation.GetAllProductInCart(User.Identity.Name);
-            return View(product);
+            try
+            {
+                var product = _productPresentation.GetByModelName(modelName);
+                var specificationAsStrList = product.Specification.Split(", ");
+                ViewBag.SpecificationAsStrList = specificationAsStrList;
+                var specificationsDictionary = new Dictionary<string, string>();
 
+                for (int i = 0; i < specificationAsStrList.Length; i++)
+                {
+                    var temp = specificationAsStrList[i].Split(":");
+                    specificationsDictionary.Add(temp[0], temp[1]);
+                }
+
+                ViewBag.SpecificationsDictionary = specificationsDictionary;
+
+                ViewBag.ProductsInCart = _cartPresentation.GetAllProductInCart(User.Identity.Name);
+                return View(product);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error has been occured in EditProductData get method.");
+                return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            }
         }
 
+        [HttpGet]
+        [Authorize(Roles = "admin, manager")]
+        public IActionResult AddNewProduct()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "admin, manager")]
+        public IActionResult EditProductData(string modelName)
+        {
+            try
+            {
+                var product = _productPresentation.GetByModelName(modelName);
+                return View(product);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error has been occured in EditProductData get method.");
+                return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            }
+        }       
+
         [HttpPost]
-        public async Task<IActionResult> EditProductAsync(ProductVM model)
+        public async Task<IActionResult> AddNewOrEditProduct(ProductVM model)
         {
             if (model.ImgFile != null)
             {
@@ -129,83 +171,129 @@ namespace E_WaveStore.Controllers
                 }
                 model.ImgUrl = $"/Images/ProductImages/{fileName}";
             }
+
             try
             {
-                _productPresentation.GetEditProductAsync(model);
+                _productPresentation.GetAddNewOrEditProduct(model);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.ToString());
+                _logger.LogError(ex, "Error has been occured in EditProductAsync post method.");
+                return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
             }
-           
 
-            return RedirectToAction("ProductList");
+            ViewBag.BrandNames = _productPresentation.GetAllBrandNames(model.Category.CategoryName);
+            ViewBag.CategoryName = model.Category.CategoryName;
+            return RedirectToAction("ProductList", "Product", new { categoryName = model.Category.CategoryName });
         }
 
         [Authorize(Roles = "admin")]
         public JsonResult RemoveProduct(string modelName)
         {
-            
-            return Json(true);
-            //return Json(_productPresentation.Remove(modelName));
+            return Json(_productPresentation.Remove(modelName));
         }
 
         [Authorize(Roles = "user")]
         public IActionResult AddProductToCart(string modelName)
         {
-            var productVM = _productPresentation.GetByModelName(modelName);
+            try
+            {
+                var productVM = _productPresentation.GetByModelName(modelName);
 
-            _cartPresentation.AddCart(User.Identity.Name, productVM);
+                _cartPresentation.AddCart(User.Identity.Name, productVM);
 
-            ViewBag.BrandNames = _productPresentation.GetAllBrandNames(productVM.Category.CategoryName);
+                ViewBag.BrandNames = _productPresentation.GetAllBrandNames(productVM.Category.CategoryName);
 
-            return View("ProductList");
+                return View("ProductList");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error has been occured in AddProductToCart method.");
+                return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            }
         }
 
         [Authorize(Roles = "user")]
         public IActionResult AllProductInCart()
         {
-            var allProductsInCart = _cartPresentation.GetAllProductInCart(User.Identity.Name);
-            return View(allProductsInCart);
+            try
+            {
+                var allProductsInCart = _cartPresentation.GetAllProductInCart(User.Identity.Name);
+                return View(allProductsInCart);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error has been occured in AllProductInCart method.");
+                return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            }
         }
 
         [Authorize(Roles = "user")]
         public IActionResult RemoveProductFromCart(string modelName)
         {
-            var allProductsInCart = _cartPresentation.GetAllProductInCart(User.Identity.Name);
-            var productInCart = allProductsInCart.FirstOrDefault(x => x.Product.ModelName == modelName);
-            _cartPresentation.RemoveProductFromCart(productInCart.Id);
-            return View("AllProductInCart");
+            try
+            {
+                var allProductsInCart = _cartPresentation.GetAllProductInCart(User.Identity.Name);
+                var productInCart = allProductsInCart.FirstOrDefault(x => x.Product.ModelName == modelName);
+                _cartPresentation.RemoveProductFromCart(productInCart.Id);
+                return View("AllProductInCart");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error has been occured in RemoveProductFromCart method.");
+                return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            }
         }
 
-        [HttpGet]        
+        [HttpGet]
         public IActionResult Order(string modelName)
         {
-            var product = _productPresentation.GetByModelName(modelName);
-            ViewBag.Product = product;
-            ViewBag.PaymentTypeNames = _orderPresentation.GetAllPaymentTypeNames();
+            try
+            {
+                var product = _productPresentation.GetByModelName(modelName);
+                ViewBag.Product = product;
+                ViewBag.PaymentTypeNames = _orderPresentation.GetAllPaymentTypeNames();
 
-            var order = new OrderVM();
-            order.UnitPrice = product.Price;
-            order.DateAndTime = DateTime.Now;
-            order.Product = product;
-            order.Quantity = 1;
+                var order = new OrderVM();
+                order.UnitPrice = product.Price;              
+                order.Product = product;
+                order.Quantity = 1;
 
-            return View(order);
+                return View(order);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error has been occured in Order method.");
+                return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            }
+
         }
         [HttpPost]
-        public IActionResult Order(OrderVM orderVM)
+        public IActionResult Order(OrderVM orderVM, string accountNumber, string accountDate, int accountCvv)
         {
+            var product = _productPresentation.GetByModelName(orderVM.Product.ModelName);
+            orderVM.Product = product;
+            orderVM.DateAndTime = DateTime.Now;
 
-            /* 1) проверить есть в БД юзер с определенным email
-             2) если нет добавить new User { }; userManager.CreateAsync(User, "User");
-             3) вожможно создам модельку с AccountNumber / CVV / PhoneNumber
-             4) потом проверить подходят ли введенные AccountNumber / CVV / PhoneNumber с данными в БД
-             5) если нет вернуть на view с сообщением о неправильности данных
-             6) Дату назначить dateTime.Now
-             7) получить полноценную модель OrderVM
-             8) сохранить в БД*/
-            return View();
+            if (!String.IsNullOrEmpty(accountNumber) && !String.IsNullOrEmpty(accountDate) && accountCvv != 0)
+            {
+                bool flag = false;
+                var bankAccount = new BankAccountVM
+                {
+                    AccountNumber = accountNumber.Replace(" ", ""),
+                    AccountCvv = accountCvv,
+                    AccountDate = accountDate
+                };
+                flag = _bankAccountPresentation.GetBankAccountVM(bankAccount);
+
+                if (!flag)
+                {
+                   return RedirectToAction("Order", "Product", new { modelName = product.ModelName });
+                }
+            }
+
+            _orderPresentation.AddOrder(orderVM);
+            return RedirectToAction("ProductList", "Product", new { categoryName = product.Category.CategoryName });
         }
 
     }

@@ -8,6 +8,6 @@ using System.Threading.Tasks;
 namespace DataLayer.Repositories.Interfaces
 {
     public interface ICartRepository : IBaseRepository<Cart>
-    {
+    {        
     }
 }
